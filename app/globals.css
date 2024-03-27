@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+
+.fc-view{
+  @apply bg-slate-100 w-full h-full;
+}
+
+.fc-header-toolbar {
+  @apply pl-5 pr-5 pt-5;
+}
+
+.fc-header-toolbar-chunk {
+  @apply flex justify-center items-center;
+}
+
+.fc-day-sat, .fc-day-sun{
+  @apply bg-green-500 !important;
+}
+
+#lessoninput input {
+  @apply p-2 border-2 border-gray-300 rounded-lg;
+}
+
+#lessoninput select {
+  @apply p-2 border-2 border-gray-300 rounded-lg;
+}
+
+#lessoninput textarea {
+  @apply p-2 border-2 border-gray-300 rounded-lg resize;
+  
+}
+
+#lessoninput div:not(#saveLessonInput){
+  @apply flex justify-center items-center;
+}
+
+#saveLessonInput input[type="submit"]{
+  @apply p-2 bg-green-500 border-2 text-black rounded-lg flex justify-end items-end;
+}
+
+#saveLessonInput input[type="submit"]:hover{
+  @apply bg-green-600;
+}
+
+#saveLessonInput{
+  @apply flex justify-end items-end;
+}
+
+#lessoninput{
+  @apply flex flex-col justify-center items-center;
+}
