@@ -37,8 +37,7 @@ export default function Calendar() {
     return (
         <main className="flex flex-col items-center justify-between p-5">
             {isLoading ? (
-                <div>is loading</div>
-                
+                <div>is loading</div>           
             ) : (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
