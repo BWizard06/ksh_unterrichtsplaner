@@ -13,7 +13,7 @@ export default function LessionInput() {
                         <select id='lektionsart' name='lektionsart' required className="w-48">
                             <option value='normal' selected>Normale Lektion</option>
                             <option value='pruefung'>Prüfung</option>
-                            <option value='admin'>Administrativer Termin</option>
+                            <option value='frei'>Frei</option>
                         </select>
                     </div>
 

@@ -62,6 +62,7 @@ model Lesson {
   start_time    DateTime
   end_time      DateTime
   room          String
+  lesson_type   String
   public_notes  String?
   private_notes String?
   files         File[]

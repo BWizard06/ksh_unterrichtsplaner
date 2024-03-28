@@ -16,7 +16,6 @@
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
     "@heroicons/react": "^2.1.1",
-    "@nextui-org/react": "^2.2.10",
     "@prisma/client": "^5.10.2",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
@@ -30,7 +29,8 @@
     "next-connect": "^1.0.0-next.4",
     "nextjs-cors": "^2.2.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-spinners": "^0.13.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

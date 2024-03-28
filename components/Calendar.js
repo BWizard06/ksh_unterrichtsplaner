@@ -6,10 +6,16 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dE from "@fullcalendar/core/locales/de";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import PulseLoader from "react-spinners/PulseLoader";
 
 export default function Calendar() {
-    const [teacherData, setTeacherData] = useState(); // [
+    const [teacherData, setTeacherData] = useState();
+    const [lessons, setLessons] = useState([]);
+    const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
+
     useEffect(() => {
         axios
             .get("/api/teacher/getByName", {
@@ -17,27 +23,38 @@ export default function Calendar() {
                     username: "andreProbst",
                 },
             })
-            .then(function (response) {
+            .then((response) => {
                 setTeacherData(response.data);
+                setLessons(response.data.lessons);
+                setAppointments(response.data.appointments);
                 setIsLoading(false);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
                 setIsLoading(false);
             });
     }, []);
 
-    const splitIsoTime = (isoTime) => {
-        return isoTime.split("T")[1].split(":").slice(0, 2).join(":");
-    };
-    const splitIsoDate = (isoDate) => {
-        return isoDate.split("T")[0];
+    const getColorLessonType = (lessonType) => {
+        if (lessonType == "pruefung") {
+            return "#c70000";
+        } else if (lessonType == "frei") {
+            return "#30cb00";
+        } else if (lessonType == "normal") {
+            return "#faff9e";
+        }
     };
 
     return (
         <main className="flex flex-col items-center justify-between p-5">
             {isLoading ? (
-                <div>is loading</div>           
+                <div className="flex justify-center items-center h-screen w-screen">
+                    <PulseLoader
+                        color={"#3c3ffa"}
+                        loading={isLoading}
+                        size={30}
+                    />
+                </div>
             ) : (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -62,6 +79,7 @@ export default function Calendar() {
                         end: "dayGridMonth timeGridWeek",
                     }}
                     slotMinTime={"06:00:00"}
+                    timeZone="Europe/Zurich"
                     slotMaxTime={"22:00:00"}
                     contentHeight={"auto"}
                     locale={dE}
@@ -71,21 +89,38 @@ export default function Calendar() {
                     weekNumberCalculation={"ISO"}
                     firstDay={1}
                     eventClick={(info) => {
-                        console.log(info);
+                        info.event.extendedProps.type == "lesson"
+                            ? router.push(`/lesson/${info.event.id}`)
+                            : router.push(`/appointment/${info.event.id}`);
                     }}
                     stickyHeaderDates={true}
                     aspectRatio={2}
-                    events={[
-                        teacherData && teacherData.lessons.length > 0
-                            ? {
-                                  title: teacherData.lessons[1].title,
-                                  startTime: "16:15",
-                                  endTime: "17:00",
-                                  daysOfWeek: [5],
-                                  color: "red",
-                              }
-                            : {},
-                    ]}
+                    events={
+                        teacherData &&
+                        teacherData.lessons &&
+                        teacherData.lessons.length > 0
+                            ? [
+                                  ...lessons.map((lesson) => ({
+                                      id: lesson.id,
+                                      title: lesson.title,
+                                      start: lesson.start_time,
+                                      end: lesson.end_time,
+                                      color: getColorLessonType(
+                                          lesson.lesson_type
+                                      ),
+                                      type: "lesson",
+                                  })),
+                                  ...appointments.map((appointment) => ({
+                                      id: appointment.id,
+                                      title: appointment.title,
+                                      start: appointment.start_time,
+                                      end: appointment.end_time,
+                                      color: "#3c3ffa",
+                                      type: "appointment",
+                                  })),
+                              ]
+                            : []
+                    }
                     allDaySlot={false}
                 />
             )}

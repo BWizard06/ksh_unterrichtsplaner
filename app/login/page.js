@@ -1,26 +1,35 @@
 import React from 'react';
-import { UserIcon } from '@heroicons/react/20/solid';
-import PasswordInput from '@/components/PasswordInput';
 
 
 export default function LoginPage(){
     return (
-        <>
-            <div className="flex justify-center items-center h-screen">
-                <div className="bg-gradient-to-b from-slate-300 via-gray-400 to-neutral-500 p-20 rounded-md font-bold text-2xl">
-                    <h1 className="flex justify-center text-4xl pb-9">Login</h1>
-                    <form className="flex flex-col mt-4">
-                        <div className="relative flex items-center">
-                            <UserIcon className="h-12 w-6 absolute mt-1" />
-                            <input id="email" type="email" placeholder="E-Mail" required className="rounded-md p-2 pl-7" />
-                        </div>
-                        <div className="relative flex items-center">
-                            <PasswordInput />
-                        </div>
-                        <input type="submit" value="Login" className="bg-gradient-to-b from-slate-300 via-gray-400 to-neutral-500 rounded-md p-2 mt-8 cursor-pointer" />
-                    </form>
-                </div>
+        <div className="flex items-center justify-center bg-blue-200/50 min-h-screen">
+            <div className="max-w-md w-full space-y-2">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-sky-300"> Anmelden </h2>
+                <form>
+                    <div className='rounded-xl space-y-2 '>
+
+                        <input
+                            type='email'
+                            placeholder='Email'
+                            className='appearance-none w-full shadow-inner px-3 py-2 border border-gray-300 placeholder-sky-300 text-blue-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                        />
+
+                        <input
+                            type='password'
+                            placeholder='Passwort'
+                            className='appearance-none w-full shadow-inner px-3 py-2 border border-gray-300 placeholder-sky-300 text-blue-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                        />
+                        
+                        <input 
+                            type='submit' 
+                            value='Anmelden'
+                            className="relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:ring-2 focus:ring-blue-400/50"
+                        />
+                        
+                    </div>
+                </form>
             </div>
-        </>
+        </div>
     );
 };
