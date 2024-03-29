@@ -4,6 +4,7 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PulseLoader from "react-spinners/PulseLoader";
 
 export default function LessonDetail() {
     const searchParams = useParams();
@@ -29,5 +30,19 @@ export default function LessonDetail() {
             });
     });
 
-    return <div>{isLoading ? <div>Loading...</div> : appointment.title}</div>;
+    return (
+        <div>
+            {isLoading ? (
+                <div className="flex justify-center items-center h-screen w-screen">
+                    <PulseLoader
+                        color={"#3c3ffa"}
+                        loading={isLoading}
+                        size={30}
+                    />
+                </div>
+            ) : (
+                appointment.title
+            )}
+        </div>
+    );
 }

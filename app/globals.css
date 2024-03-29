@@ -34,30 +34,38 @@
 }
 
 #lessoninput input {
-  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg;
+  @apply p-2 w-auto border-2 placeholder-sky-300 text-sky-300 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
 #lessoninput select {
-  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg;
+  @apply p-2 h-11 text-sky-300 border-2 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
 #lessoninput textarea {
-  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg resize;
+  @apply p-2 w-96 placeholder-sky-300 text-sky-300 border-2 border-indigo-300 rounded-lg resize focus:outline-none focus:ring-2 focus:ring-blue-400/50;
   
 }
 
 #lessoninput input[type="submit"] {
-  @apply bg-green-500 border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
+  @apply bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
 }
 
 #lessoninput input[type="file"] {
-  @apply bg-green-500 border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
+  @apply p-4 mr-3 bg-sky-300 hover:bg-sky-400 border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
 }
 
 #lessoninput div:not(#saveLessonInput){
   @apply flex justify-center items-center;
 }
 
+#lessoninput input[type='number'] {
+  @apply p-2 w-40 border-2 placeholder-sky-300 text-end text-sky-300 border-indigo-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+}
+
 #saveLessonInput{
   @apply flex justify-end items-end;
+}
+
+body{
+  @apply bg-blue-200/50
 }

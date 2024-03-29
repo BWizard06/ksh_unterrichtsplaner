@@ -41,7 +41,7 @@ export default function Calendar() {
         } else if (lessonType == "frei") {
             return "#30cb00";
         } else if (lessonType == "normal") {
-            return "#faff9e";
+            return "#020300";
         }
     };
 
@@ -74,7 +74,7 @@ export default function Calendar() {
                         },
                     }}
                     headerToolbar={{
-                        start: "terminimport lessoninput",
+                        start: "terminimport lessoninput title",
                         center: "prev today next",
                         end: "dayGridMonth timeGridWeek",
                     }}

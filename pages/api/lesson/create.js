@@ -1,3 +1,4 @@
+'use client'
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -12,6 +13,10 @@ export default async function handler(req, res) {
                 start_time,
                 end_time,
                 room,
+                lesson_type,
+                homework,
+                lesson_goals,
+                subject,
                 public_notes,
                 private_notes,
             } = req.body;
@@ -22,7 +27,9 @@ export default async function handler(req, res) {
                 !title ||
                 !start_time ||
                 !end_time ||
-                !room
+                !room || 
+                !lesson_type ||
+                !subject
             ) {
                 return res
                     .status(400)
@@ -61,6 +68,10 @@ export default async function handler(req, res) {
                     start_time: new Date(start_time),
                     end_time: new Date(end_time),
                     room,
+                    lesson_type,
+                    homework,
+                    lesson_goals,
+                    subject,
                     public_notes,
                     private_notes,
                 },

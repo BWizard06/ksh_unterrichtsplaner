@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function LoginPage(){
     return (
-        <div className="flex items-center justify-center bg-blue-200/50 min-h-screen">
+        <div className="flex items-center justify-center min-h-screen">
             <div className="max-w-md w-full space-y-2">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-sky-300"> Anmelden </h2>
                 <form>

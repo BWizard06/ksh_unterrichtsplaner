@@ -63,6 +63,9 @@ model Lesson {
   end_time      DateTime
   room          String
   lesson_type   String
+  homework      String?
+  lesson_goals  String?
+  subject       String
   public_notes  String?
   private_notes String?
   files         File[]
@@ -76,7 +79,7 @@ model File {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   lessonId   String @db.ObjectId
   file_name   String
-  file_type   String?
+  file_type   String
   binary_file Bytes
   visibility  Boolean
   lesson      Lesson  @relation(fields: [lessonId], references: [id])
