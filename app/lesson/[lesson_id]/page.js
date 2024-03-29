@@ -5,12 +5,20 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { marked } from 'marked';
+import 'github-markdown-css';
+
 
 export default function LessonDetail() {
     const searchParams = useParams();
     const lesson_id = searchParams.lesson_id;
     const [lesson, setLesson] = useState();
     const [isLoading, setIsLoading] = useState(true);
+
+    const getMarkdownText = (text) => {
+        const rawMarkup = marked(text);
+        return {__html: rawMarkup};
+    };
 
     useEffect(() => {
         axios
@@ -41,7 +49,15 @@ export default function LessonDetail() {
                     />
                 </div>
             ) : (
-                lesson.title
+                <div>
+                    <h1 className="text-3xl font-extrabold text-sky-300">
+                        {lesson.title}
+                    </h1>
+                    <div
+                        className="markdown-body"
+                        dangerouslySetInnerHTML={getMarkdownText(lesson.homework)}
+                    />
+                </div>
             )}
         </div>
     );

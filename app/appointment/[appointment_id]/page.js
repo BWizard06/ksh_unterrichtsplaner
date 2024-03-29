@@ -5,8 +5,9 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
-export default function LessonDetail() {
+export default function AppointmentDetail() {
     const searchParams = useParams();
     const appointment_id = searchParams.appointment_id;
     const [appointment, setAppointment] = useState();
@@ -41,7 +42,12 @@ export default function LessonDetail() {
                     />
                 </div>
             ) : (
-                appointment.title
+                <div className="items-center justify-center text-center min-h-screen w-full">
+                    <div className="space-y-2">
+                        <h1 className='text-3xl font-extrabold text-sky-300'>{appointment.id}</h1>
+                        
+                    </div>
+                </div>
             )}
         </div>
     );
