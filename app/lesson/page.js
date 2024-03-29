@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LessionInput() {
     const [subject, setSubject] = useState();
@@ -19,10 +20,11 @@ export default function LessionInput() {
     const [teacherNotes, setTeacherNotes] = useState();
     const [studentNotes, setStudentNotes] = useState();
     const [files, setFiles] = useState();
-    const [fileVisibility, setFileVisibility] = useState();
+    const [fileVisibility, setFileVisibility] = useState(false);
     const [teacherData, setTeacherData] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [recurrence, setRecurrence] = useState();
+    const { toast } = useToast();
 
     useEffect(() => {
         axios
@@ -84,41 +86,71 @@ export default function LessionInput() {
             };
 
             try {
-                const response = axios.post("/api/lesson/create", lessonData);
-                console.log(response);
+                axios
+                    .post("/api/lesson/create", lessonData)
+                    .then((response) => {
+                        console.log(response);
+                        const createdLessonId = response.data.id;
+                        toast({
+                            title: "Lektion erstellt",
+                            description: "Die Lektion wurde erfolgreich erstellt.",
+                            variant: "success",
+                        })
 
-                lessonStartTime.setDate(lessonStartTime.getDate() + 7);
-                lessonEndTime.setDate(lessonEndTime.getDate() + 7);
+                        if (!createdLessonId) {
+                            console.error(
+                                "Keine gültige Lektions-ID erhalten."
+                            );
+                            return;
+                        }
+
+                        lessonStartTime.setDate(lessonStartTime.getDate() + 7);
+                        lessonEndTime.setDate(lessonEndTime.getDate() + 7);
+
+                        if (files) {
+                            for (let i = 0; i < files.length; i++) {
+                                const formData = new FormData();
+                                formData.append("file", files[i]);
+                                formData.append(
+                                    "json",
+                                    JSON.stringify({
+                                        lessonId: createdLessonId,
+                                        visibility: fileVisibility,
+                                    })
+                                );
+                                axios
+                                    .post("/api/file/create", formData, {
+                                        headers: {
+                                            "Content-Type":
+                                                "multipart/form-data",
+                                        },
+                                    })
+                                    .then((response) => {
+                                        console.log(response);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
+                            }
+                        }
+                    })
+                .catch((error) => {
+                    toast({
+                        title: "Fehler beim Erstellen der Lektion",
+                        description: "Es ist ein Fehler beim Erstellen der Lektion aufgetreten.",
+                        variant: "destructive",
+                    })
+                    console.log(error)
+                })
             } catch (error) {
                 console.log(error);
             }
         }
-        if (files) {
-            for (let i = 0; i < files.length; i++) {
-                const formData = new FormData();
-                formData.append("file", files[i]);
-                formData.append(
-                    "json",
-                    JSON.stringify({
-                        lessonId,
-                        visibility: fileVisibility,
-                    })
-                );
-                axios
-                    .post("/api/file/create", formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    })
-                    .then((response) => {
-                        console.log(response);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        }
     };
+
+    useEffect(() => {
+        console.log("lessonId:" + lessonId);
+    }, [lessonId]);
 
     const dateSplitToIso = (date, time) => {
         const [year, month, day] = date.split("-");
@@ -359,6 +391,7 @@ export default function LessionInput() {
                                         onChange={(e) =>
                                             setFiles(e.target.files)
                                         }
+                                        multiple
                                     />
                                     <input
                                         id="fileVisibility"
@@ -369,7 +402,7 @@ export default function LessionInput() {
                                         }
                                     />
                                     <label htmlFor="fileVisibility">
-                                        Sichtbar
+                                        Sichtbar für Schüler
                                     </label>
                                 </div>
 

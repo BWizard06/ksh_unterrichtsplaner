@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import PulseLoader from "react-spinners/PulseLoader";
+import { useToast } from "@/components/ui/use-toast";
 
 
 export default function appointmentInput(){
@@ -10,6 +10,37 @@ export default function appointmentInput(){
     const [startTime, setStartTime] = useState();
     const [endTime, setEndTime] = useState();
     const [notes, setNotes] = useState();
+    const {toast} = useToast();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        axios
+            .post("/api/appointment/create", {
+                teacherId: "65f35c82a3625a11fa36b61e",
+                title: title,
+                start_time: startTime,
+                end_time: endTime,
+                notes: notes,
+            })
+            .then((response) => {
+                console.log(response);
+                toast({
+                    title: "Termin erstellt",
+                    description: "Der Termin wurde erfolgreich erstellt.",
+                    variant: "success",
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const dateSplitToIso = (date, time) => {
+        const [year, month, day] = date.split("-");
+        return `${year}-${month}-${day}T${time}:00`;
+    };
+
 
     return (
         <div className="flex items-center justify-center text-center min-h-screen w-full">
@@ -28,6 +59,7 @@ export default function appointmentInput(){
                                 placeholder="Titel"
                                 required
                                 className="w-auto"
+                                onChange={(event) => setTitle(event.target.value)}
                             />
                         </div>
 
@@ -45,6 +77,16 @@ export default function appointmentInput(){
                                 min={"07:00"}
                                 max={"22:00"}
                                 step={900}
+                                onChange={(e) =>
+                                    setStartTime(
+                                        dateSplitToIso(
+                                            e.target.value.split(
+                                                "T"
+                                            )[0],
+                                            e.target.value.split("T")[1]
+                                        )
+                                    )
+                                }
                             />
                             <label
                                 htmlFor="end"
@@ -59,6 +101,16 @@ export default function appointmentInput(){
                                 min={"07:00"}
                                 max={"22:00"}
                                 step={900}
+                                onChange={(e) =>
+                                    setEndTime(
+                                        dateSplitToIso(
+                                            e.target.value.split(
+                                                "T"
+                                            )[0],
+                                            e.target.value.split("T")[1]
+                                        )
+                                    )
+                                }
                             />
                         </div>
 
@@ -67,6 +119,7 @@ export default function appointmentInput(){
                                 id="notes"
                                 name="notes"
                                 placeholder="Ihre Notizen"
+                                onChange={(event) =>setNotes(event.target.value)}
                             />
                         </div>
 
@@ -75,6 +128,7 @@ export default function appointmentInput(){
                                 type="submit"
                                 value="Termin erfassen"
                                 className="mt-6"
+                                onClick={handleSubmit}
                             />
                         </div>
                     </form>

@@ -61,21 +61,21 @@ export default function Calendar() {
                     initialView="dayGridMonth"
                     customButtons={{
                         terminimport: {
-                            text: "Terminimport",
+                            text: "Termin eintragen",
                             click: function () {
-                                window.location.href = "/terminimport";
+                                window.location.href = "/appointment";
                             },
                         },
                         lessoninput: {
                             text: "Lektion eintragen",
                             click: function () {
-                                window.location.href = "/lessoninput";
+                                window.location.href = "/lesson";
                             },
                         },
                     }}
                     headerToolbar={{
-                        start: "terminimport lessoninput title",
-                        center: "prev today next",
+                        start: "terminimport lessoninput",
+                        center: "prev today next title",
                         end: "dayGridMonth timeGridWeek",
                     }}
                     slotMinTime={"06:00:00"}
@@ -88,6 +88,7 @@ export default function Calendar() {
                     weekNumbers={true}
                     weekNumberCalculation={"ISO"}
                     firstDay={1}
+                    eventStartEditable ={false}
                     eventClick={(info) => {
                         info.event.extendedProps.type == "lesson"
                             ? router.push(`/lesson/${info.event.id}`)
