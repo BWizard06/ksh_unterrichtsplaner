@@ -10,21 +10,21 @@ export default function LoginPage(){
                     <div className='rounded-xl space-y-2 '>
 
                         <input
-                            type='email'
-                            placeholder='Email'
-                            className='appearance-none w-full shadow-inner px-3 py-2 border border-gray-300 placeholder-sky-300 text-blue-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                            type='text'
+                            placeholder='Benutzername'
+                            className='appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-sky-300 text-blue-700  focus:outline-none focus:ring-2 focus:ring-blue-400/50'
                         />
 
                         <input
                             type='password'
                             placeholder='Passwort'
-                            className='appearance-none w-full shadow-inner px-3 py-2 border border-gray-300 placeholder-sky-300 text-blue-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                            className='appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-sky-300 text-blue-00 focus:outline-none focus:ring-2 focus:ring-blue-400/50'
                         />
                         
                         <input 
                             type='submit' 
                             value='Anmelden'
-                            className="relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:ring-2 focus:ring-blue-400/50"
+                            className="relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:bg-sky-800 focus:ring-2 focus:ring-blue-400/50"
                         />
                         
                     </div>

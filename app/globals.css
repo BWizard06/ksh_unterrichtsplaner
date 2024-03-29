@@ -34,34 +34,30 @@
 }
 
 #lessoninput input {
-  @apply p-2 border-2 border-gray-300 rounded-lg;
+  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg;
 }
 
 #lessoninput select {
-  @apply p-2 border-2 border-gray-300 rounded-lg;
+  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg;
 }
 
 #lessoninput textarea {
-  @apply p-2 border-2 border-gray-300 rounded-lg resize;
+  @apply p-2 placeholder-sky-300 text-blue-700 border-2 border-indigo-300 rounded-lg resize;
   
+}
+
+#lessoninput input[type="submit"] {
+  @apply bg-green-500 border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
+}
+
+#lessoninput input[type="file"] {
+  @apply bg-green-500 border-none rounded-lg text-white flex justify-end items-end cursor-pointer;
 }
 
 #lessoninput div:not(#saveLessonInput){
   @apply flex justify-center items-center;
 }
 
-#saveLessonInput input[type="submit"]{
-  @apply p-2 bg-green-500 border-2 text-black rounded-lg flex justify-end items-end;
-}
-
-#saveLessonInput input[type="submit"]:hover{
-  @apply bg-green-600;
-}
-
 #saveLessonInput{
   @apply flex justify-end items-end;
-}
-
-#lessoninput{
-  @apply flex flex-col justify-center items-center;
 }
