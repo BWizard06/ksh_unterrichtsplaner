@@ -143,7 +143,7 @@ export default function LessionInput() {
 
                         <div
                             id="lessoninput"
-                            className="flex flex-col justify-center items-center"
+                            className="flex flex-col justify-center items-center inputForm"
                         >
                             <form>
                                 <div id="general" className="space-x-3 mt-4">
@@ -377,7 +377,6 @@ export default function LessionInput() {
                                     <input
                                         type="submit"
                                         value="Lektion erfassen"
-                                        className=" hover:bg-green-700"
                                         onClick={handleSubmit}
                                     />
                                 </div>
