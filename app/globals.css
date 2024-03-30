@@ -134,6 +134,11 @@ body{
   @apply p-2 w-40 border-2 placeholder-sky-300 text-end text-sky-300 border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
+.backBtn{
+  @apply p-2 bg-red-500 hover:bg-red-600 focus:bg-red-700 focus:outline-none border-none rounded-xl text-white flex justify-end items-end cursor-pointer;
+
+}
+
 ol{
   list-style-type: decimal;
 }
