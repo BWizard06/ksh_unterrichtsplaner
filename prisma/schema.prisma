@@ -94,6 +94,7 @@ model Appointment {
   start_time DateTime
   end_time   DateTime
   notes     String?
+  location  String?
   teacher   Teacher  @relation(fields: [teacherId], references: [id])
 
   @@index([teacherId])

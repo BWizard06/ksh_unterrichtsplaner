@@ -107,24 +107,24 @@ body{
 }
 
 .inputForm input {
-  @apply p-2 w-auto border-2 placeholder-sky-300 text-sky-300 border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+  @apply p-2 w-auto border-2 placeholder-black text-black border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
 .inputForm select {
-  @apply p-2 h-11 text-sky-300 border-2 border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+  @apply p-2 h-11 text-black border-2 border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
 .inputForm textarea {
-  @apply p-2 w-96 placeholder-sky-300 text-sky-300 border-2 border-indigo-300 rounded-xl resize focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+  @apply p-2 w-96 placeholder-black text-black border-2 border-indigo-300 rounded-xl resize focus:outline-none focus:ring-2 focus:ring-blue-400/50;
   
 }
 
 .inputForm input[type="submit"] {
-  @apply bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white flex justify-end items-end cursor-pointer;
+  @apply bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white flex justify-center items-center cursor-pointer;
 }
 
 .inputForm input[type="file"] {
-  @apply p-4 mr-3 bg-sky-300 hover:bg-sky-400 border-none rounded-xl text-white flex justify-end items-end cursor-pointer;
+  @apply p-4 mr-3 bg-sky-300 hover:bg-sky-400 border-none rounded-xl text-white flex justify-center items-center cursor-pointer;
 }
 
 .inputForm div{
@@ -132,12 +132,16 @@ body{
 }
 
 .inputForm input[type='number'] {
-  @apply p-2 w-40 border-2 placeholder-sky-300 text-end text-sky-300 border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+  @apply p-2 w-40 border-2 placeholder-black text-end text-black border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
 .backBtn{
   @apply p-2 bg-red-500 hover:bg-red-600 focus:bg-red-700 focus:outline-none border-none rounded-xl text-white flex justify-end items-end cursor-pointer;
 
+}
+
+.title{
+  @apply text-3xl font-extrabold text-black
 }
 
 .loginInputField{

@@ -170,10 +170,7 @@ export default function LessionInput() {
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">
                         <div className="flex justify-center items-center">
-                            <button className="backBtn" onClick={() => { window.location.href = "/calendar"; }}>
-                                Zurück
-                            </button>
-                            <h1 className="text-3xl font-extrabold text-sky-300">
+                            <h1 className="title">
                                 Lektion erfassen
                             </h1>
                         </div>
@@ -283,7 +280,7 @@ export default function LessionInput() {
                                 <div id="time" className="mt-5 space-x-3">
                                     <label
                                         htmlFor="start"
-                                        className="text-sky-500"
+                                        className="text-black"
                                     >
                                         Von:
                                     </label>
@@ -307,7 +304,7 @@ export default function LessionInput() {
                                     />
                                     <label
                                         htmlFor="end"
-                                        className="text-sky-500"
+                                        className="text-black"
                                     >
                                         Bis:
                                     </label>
@@ -415,7 +412,6 @@ export default function LessionInput() {
                                     <input
                                         type="submit"
                                         value="Lektion erfassen"
-                                        className="mr-20"
                                         onClick={handleSubmit}
                                             /*(e) =>{ 
                                             var allInputs = document.querySelectorAll('input:not([type=submit])');

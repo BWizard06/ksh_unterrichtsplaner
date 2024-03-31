@@ -122,6 +122,14 @@ export default function Calendar() {
                                       color: "green",
                                       allDay: true,
                                     },
+                                    {
+                                        daysOfWeek: [5],
+                                        display: "background",
+                                        color: "red",
+                                        start: '16:15',
+                                        end: '17:00',
+                                        title: 'Nachprüfung'
+                                    }
                               ]
                             : [
                                 {
@@ -129,7 +137,16 @@ export default function Calendar() {
                                     display: "background",
                                     color: "green",
                                     allDay: true,
+                                },
+                                {
+                                    daysOfWeek: [5],
+                                    display: "background",
+                                    color: "red",
+                                    start: '16:15',
+                                    end: '17:00',
+                                    title: 'Nachprüfung'
                                 }
+
                             ]
                     }
                     allDaySlot={false}
