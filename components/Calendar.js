@@ -58,7 +58,7 @@ export default function Calendar() {
             ) : (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth"
+                    initialView="timeGridWeek"
                     customButtons={{
                         terminimport: {
                             text: "Termin eintragen",
@@ -83,12 +83,9 @@ export default function Calendar() {
                     slotMaxTime={"22:00:00"}
                     contentHeight={"auto"}
                     locale={dE}
-                    editable={true}
-                    selectable={true}
                     weekNumbers={true}
                     weekNumberCalculation={"ISO"}
                     firstDay={1}
-                    eventStartEditable ={false}
                     eventClick={(info) => {
                         info.event.extendedProps.type == "lesson"
                             ? router.push(`/lesson/${info.event.id}`)
@@ -119,8 +116,21 @@ export default function Calendar() {
                                       color: "#3c3ffa",
                                       type: "appointment",
                                   })),
+                                  {
+                                      daysOfWeek: [0, 6],
+                                      display: "background",
+                                      color: "green",
+                                      allDay: true,
+                                    },
                               ]
-                            : []
+                            : [
+                                {
+                                    daysOfWeek: [0, 6],
+                                    display: "background",
+                                    color: "green",
+                                    allDay: true,
+                                }
+                            ]
                     }
                     allDaySlot={false}
                 />

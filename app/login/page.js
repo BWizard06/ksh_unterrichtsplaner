@@ -5,20 +5,20 @@ export default function LoginPage(){
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="max-w-md w-full space-y-2">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-sky-300"> Anmelden </h2>
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-black"> Anmelden </h2>
                 <form>
                     <div className='rounded-xl space-y-2 '>
 
                         <input
                             type='text'
                             placeholder='Benutzername'
-                            className='appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-sky-300 text-blue-700  focus:outline-none focus:ring-2 focus:ring-blue-400/50'
+                            className='loginInputField'
                         />
 
                         <input
                             type='password'
                             placeholder='Passwort'
-                            className='appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-sky-300 text-blue-00 focus:outline-none focus:ring-2 focus:ring-blue-400/50'
+                            className='loginInputField'
                         />
                         
                         <input 
