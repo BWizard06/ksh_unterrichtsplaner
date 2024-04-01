@@ -1,16 +1,32 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        const { userId, classIds } = req.body;
+        const {username, password, email, classIds } = req.body;
 
-        if (!userId || !classIds) {
+        if (!username || !password || !email || !classIds) {
             return res
                 .status(400)
                 .json({ error: "UserId und ClassIds sind erforderlich." });
         }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const user = await prisma.user.create({
+            data: {
+                username,
+                email,
+                password: hashedPassword,
+            },
+        });
+
+        const userId = user.id;
+        let teacherId = null;
 
         try {
             const result = await prisma.$transaction(async (prisma) => {
@@ -19,6 +35,8 @@ export default async function handler(req, res) {
                         userId,
                     },
                 });
+
+                teacherId = teacher.id;
 
                 const classTeacher = await prisma.ClassTeacher.createMany({
                     data: classIds.map((classId) => ({
@@ -30,7 +48,11 @@ export default async function handler(req, res) {
                 return { teacher, classTeacher };
             });
 
-            res.status(201).json(result);
+            const token = jwt.sign({ id: teacherId, username}, process.env.JWT_SECRET, {
+                expiresIn: "7d",
+            });
+
+            res.status(201).json({message: "Lehrer und Klassen erfolgreich erstellt", token});
         } catch (error) {
             console.error(
                 "Fehler beim Erstellen des Lehrers und seiner Klassen:",

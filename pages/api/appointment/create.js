@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
-            const { teacherId, title, start_time, end_time, notes } = req.body;
+            const { teacherId, title, start_time, end_time, notes, location } = req.body;
 
             if (!teacherId || !title || !start_time || !end_time) {
                 return res
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
                     start_time: new Date(start_time),
                     end_time: new Date(end_time),
                     notes,
+                    location,
                 },
             });
 

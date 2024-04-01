@@ -137,7 +137,7 @@ export default function LessionInput() {
                 .catch((error) => {
                     toast({
                         title: "Fehler beim Erstellen der Lektion",
-                        description: "Es ist ein Fehler beim Erstellen der Lektion aufgetreten.",
+                        description: "Fehler: " + error.response.data.message,
                         variant: "destructive",
                     })
                     console.log(error)

@@ -13,7 +13,6 @@ model User {
   email    String   @unique
   password String
   teacher  Teacher?
-  student  Student?
 }
 
 model Teacher {
@@ -27,8 +26,7 @@ model Teacher {
 
 model Student {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String @unique @db.ObjectId
-  user    User   @relation(fields: [userId], references: [id])
+  username String @unique
   class   Class  @relation(fields: [classId], references: [id])
   classId String @db.ObjectId
 

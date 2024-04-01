@@ -12,6 +12,7 @@ export default function appointmentInput(){
     const [endTime, setEndTime] = useState();
     const [notes, setNotes] = useState();
     const [file, setFile] = useState(null);
+    const [location, setLocation] = useState();
     const {toast} = useToast();
 
     const handleSubmit = (event) => {
@@ -24,6 +25,7 @@ export default function appointmentInput(){
                 start_time: startTime,
                 end_time: endTime,
                 notes: notes,
+                location: location,
             })
             .then((response) => {
                 console.log(response);
@@ -35,6 +37,11 @@ export default function appointmentInput(){
             })
             .catch((error) => {
                 console.log(error);
+                toast({
+                    title: "Fehler beim Erstellen des Termins",
+                    description: "Fehler: " + error.response.data.message,
+                    variant: "destructive",
+                })
             });
     }
 
@@ -126,6 +133,7 @@ export default function appointmentInput(){
                                 id="location"
                                 name="location"
                                 placeholder="Ort"
+                                onChange={(event) => setLocation(event.target.value)}
                             />
                         </div>
 
