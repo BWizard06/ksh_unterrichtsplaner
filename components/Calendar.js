@@ -86,6 +86,11 @@ export default function Calendar() {
                     weekNumbers={true}
                     weekNumberCalculation={"ISO"}
                     firstDay={1}
+                    editable={true}
+                    eventStartEditable={false}
+                    eventResizableFromStart={false}
+                    eventResizableFromEnd={false}
+                    droppable={false}
                     eventClick={(info) => {
                         info.event.extendedProps.type == "lesson"
                             ? router.push(`/lesson/${info.event.id}`)
