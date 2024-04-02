@@ -5,7 +5,10 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
+import TrashBinIcon from "@/components/TrashBinIcon";
+import ShareLinkIcon from "@/components/ShareLinkIcon";
+import EditPenIcon from "@/components/EditPenIcon";
 import ReactMarkdown from "react-markdown";
 const {useRouter} = require('next/navigation')
 
@@ -35,7 +38,7 @@ export default function AppointmentDetail() {
     }
 
     useEffect(() => {
-
+/*
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -47,7 +50,7 @@ export default function AppointmentDetail() {
             if (!response.data.valid) {
                 router.push('/login')
             }
-        })
+        })*/
 
         axios
             .get("/api/appointment/getById", {
@@ -80,7 +83,7 @@ export default function AppointmentDetail() {
     }
 
     return (
-        <div>
+        <main className="flex flex-col items-center justify-between">
             {isLoading ? (
                 <div className="flex justify-center items-center h-screen w-screen">
                     <PulseLoader
@@ -90,26 +93,34 @@ export default function AppointmentDetail() {
                     />
                 </div>
             ) : (
-                <div className="flex items-center justify-center text-center min-h-screen w-full">
-                    <div className="space-y-2 bg-indigo-300/10 max-w-max p-10 rounded-xl">
-                        <div className="flex items-center justify-left mb-5">
-                            <PencilSquareIcon className='w-12 h-12 mr-3' stroke='blue'/>
-                            <TrashIcon 
-                                className='w-12 h-12 hover:cursor-pointer' 
-                                stroke='red' 
-                                onClick={() => deleteAppointment(appointment.id)}
-                            />
+                <div className="flex flex-col items-center justify-center text-center min-h-screen">
+                    <div className="w-full space-x-2">
+                        <div className="flex items-center justify-center">
+                            <ArrowLeftRectangle />
+                            <h1 className="title">
+                                {appointment.title}
+                            </h1>
+                            <TrashBinIcon />
+                            <ShareLinkIcon />
+                            <EditPenIcon />
                         </div>
-                        <div className='flex items-center justify-center'>
-                            <h1 className='text-3xl font-extrabold text-sky-300'>{appointment.title}</h1>
-                        </div>
-                        <div className="flex items-center justify-center">  
-                            <h2 className="text-xl font-bold text-sky-300 mt-6 mb-12">{isoToString(appointment.start_time)} bis {isoToString(appointment.end_time)}</h2>
-                        </div>
-                        <ReactMarkdown className="markdown-body">{appointment.notes}</ReactMarkdown>                   
+                    
                     </div>
+                    <div className="space-y-1">
+                        <p className="text-2xl"><span className="subtitle">Datum: </span> Vom {isoToString(appointment.start_time)} bis {isoToString(appointment.end_time)}</p>
+                        <p className="text-2xl"><span className="subtitle">Ort: </span>{appointment.location}</p>
+                    </div>
+                    
+                    {appointment.notes ? (
+                        <div className="mt-12">
+                            <p className="subtitle">Notizen</p>
+                            <ReactMarkdown>{appointment.notes}</ReactMarkdown>
+                        </div>
+                    ):(
+                        <p className="subtitle mt-12">Keine Notizen eingetragen!</p>
+                    )}
                 </div>
             )}
-        </div>
+        </main>
     );
 }

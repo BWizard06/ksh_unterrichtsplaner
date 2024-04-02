@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import ExcelReader from "@/components/ExcelReader";
+import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
 
 
 export default function appointmentInput(){
@@ -56,10 +57,9 @@ export default function appointmentInput(){
 
 
     return (
-        <div className='flex flex-col'>
-
             <div className="flex items-center justify-center text-center min-h-screen w-full">
                 <div className="space-y-2">
+                    <ArrowLeftRectangle />
                     <h1 className="title">
                         Termin erfassen
                     </h1>
@@ -170,6 +170,5 @@ export default function appointmentInput(){
                 </div>
                 
             </div>
-        </div>
     )
 }

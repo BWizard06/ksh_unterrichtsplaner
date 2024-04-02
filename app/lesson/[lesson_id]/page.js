@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import ReactMarkdown from "react-markdown";
-import { PencilSquareIcon, TrashIcon, ShareIcon } from "@heroicons/react/24/outline";
+import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
+import TrashBinIcon from "@/components/TrashBinIcon";
+import ShareLinkIcon from "@/components/ShareLinkIcon";
+import EditPenIcon from "@/components/EditPenIcon";
 import "@/app/globals.css";
 import "@/app/splendor.min.css";
 
@@ -66,7 +69,7 @@ export default function LessonDetail() {
     }, []);
 
     return (
-        <div>
+        <main className="flex flex-col items-center justify-between">
             {isLoading ? (
                 <div className="flex justify-center items-center h-screen w-screen">
                     <PulseLoader
@@ -76,29 +79,54 @@ export default function LessonDetail() {
                     />
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-center text-center min-h-screen min-w-screen">
-
-                    <div className="flex items-center justify-left mb-5">
-                        <PencilSquareIcon className='w-12 h-12 mr-3' stroke='blue' onClick={(e)=>console.log('aa')} />
-                        <TrashIcon className='w-12 h-12 mr-3 hover:cursor-pointer' stroke='red' />
-                        <ShareIcon className='w-12 h-12' />
+                <div className="flex flex-col items-center justify-center text-center min-h-screen">
+                    <div className="w-full space-x-2">
+                        <div className="flex items-center justify-center">
+                            <ArrowLeftRectangle />
+                            <h1 className="title">
+                                {lesson.title}
+                            </h1>
+                            <TrashBinIcon />
+                            <ShareLinkIcon />
+                            <EditPenIcon />
+                        </div>
+                    
                     </div>
-
-                    <div className="flex flex-col items-center justify-center">
-                        <h1 className="text-3xl font-extrabold text-black">
-                            {lesson.title}
-                        </h1>
-                        <h2 className="text-2xl font-boldn text-black m-2">
-                            {lesson.subject} - {lesson.lesson_type} - {isoToString(lesson.start_time)} bis {isoToString(lesson.end_time)}
-                        </h2>
+                    <div className="space-y-1">
+                        <p className="text-2xl m-[4.5px]"><span className="subtitle">Fach: </span>{lesson.subject}</p>
+                        <p className="text-2xl"><span className="subtitle">Klasse: </span>{lesson.classId}</p>
+                        <p className="text-2xl"><span className="subtitle">Lektionstyp: </span>{lesson.lesson_type}</p>
+                        <p className="text-2xl"><span className="subtitle">Datum: </span> Vom {isoToString(lesson.start_time)} bis {isoToString(lesson.end_time)}</p>
+                        <p className="text-2xl"><span className="subtitle">Zimmer: </span>{lesson.room}</p>
                     </div>
                     
-                    <div>
-                        <p>{lesson.classId}</p>
-                        <p>{lesson.lesson_goals}</p>
-                    </div>
+                    {lesson.lesson_goals ? (
+                        <div className="mt-12">
+                            <p className="subtitle">Lektionsziele</p>
+                            <ReactMarkdown>{lesson.lesson_goals}</ReactMarkdown>
+                        </div>
+                        ):(
+                        <p className="subtitle mt-12">Keine Lektionsziele eingetragen!</p>
+                        )}
+                    
+                    {lesson.public_notes ? (
+                        <div className="mt-12">
+                            <p className="subtitle">Notizen</p>
+                            <ReactMarkdown>{lesson.public_notes}</ReactMarkdown>
+                        </div>
+                    ):(
+                        <p className="subtitle mt-12">Keine Notizen eingetragen!</p>
+                    )}
 
-                    <ReactMarkdown>{lesson.public_notes}</ReactMarkdown>
+                    {lesson.homework ? (
+                        <div className="mt-12">
+                            <p className="subtitle">Hausaufgaben</p>
+                            <ReactMarkdown>{lesson.homework}</ReactMarkdown>
+                        </div>
+                    ):(
+                        <p className="subtitle mt-12">Keine Hausaufgaben eingetragen!</p>
+                    )}
+                    
                     {lesson.files.map((file) => (
                         <div key={file.id} className="flex items-center justify-center">
                             <button
@@ -111,6 +139,6 @@ export default function LessonDetail() {
                     ))}
                 </div>
             )}
-        </div>
+        </main>
     );
 }

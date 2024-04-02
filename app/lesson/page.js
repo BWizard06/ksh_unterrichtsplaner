@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToast } from "@/components/ui/use-toast";
+import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
 
 export default function LessionInput() {
     const [subject, setSubject] = useState();
@@ -170,6 +171,7 @@ export default function LessionInput() {
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">
                         <div className="flex justify-center items-center">
+                            <ArrowLeftRectangle />
                             <h1 className="title">
                                 Lektion erfassen
                             </h1>

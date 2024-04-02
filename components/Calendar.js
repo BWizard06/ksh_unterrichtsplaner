@@ -86,11 +86,6 @@ export default function Calendar() {
                     weekNumbers={true}
                     weekNumberCalculation={"ISO"}
                     firstDay={1}
-                    editable={true}
-                    eventStartEditable={false}
-                    eventResizableFromStart={false}
-                    eventResizableFromEnd={false}
-                    droppable={false}
                     eventClick={(info) => {
                         info.event.extendedProps.type == "lesson"
                             ? router.push(`/lesson/${info.event.id}`)
@@ -124,16 +119,16 @@ export default function Calendar() {
                                   {
                                       daysOfWeek: [0, 6],
                                       display: "background",
-                                      color: "green",
+                                      color: "#30cb00",
                                       allDay: true,
                                     },
                                     {
                                         daysOfWeek: [5],
-                                        display: "background",
-                                        color: "red",
-                                        start: '16:15',
-                                        end: '17:00',
-                                        title: 'Nachprüfung'
+                                        color: "#c70000",
+                                        startTime: '16:15',
+                                        endTime: '17:00',
+                                        title: 'Nachprüfung',
+                                        allDay: false,
                                     }
                               ]
                             : [
@@ -145,10 +140,9 @@ export default function Calendar() {
                                 },
                                 {
                                     daysOfWeek: [5],
-                                    display: "background",
                                     color: "red",
-                                    start: '16:15',
-                                    end: '17:00',
+                                    startTime: '16:15',
+                                    endTime: '17:00',
                                     title: 'Nachprüfung'
                                 }
 
