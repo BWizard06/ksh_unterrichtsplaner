@@ -35,6 +35,20 @@ export default function AppointmentDetail() {
     }
 
     useEffect(() => {
+
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            router.push('/login')
+            return;
+        }
+
+        axios.post('/api/verifyToken', {token}).then((response) => {
+            if (!response.data.valid) {
+                router.push('/login')
+            }
+        })
+
         axios
             .get("/api/appointment/getById", {
                 params: {
