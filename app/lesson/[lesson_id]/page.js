@@ -94,7 +94,7 @@ export default function LessonDetail() {
                     </div>
                     <div className="space-y-1">
                         <p className="text-2xl m-[4.5px]"><span className="subtitle">Fach: </span>{lesson.subject}</p>
-                        <p className="text-2xl"><span className="subtitle">Klasse: </span>{lesson.classId}</p>
+                        <p className="text-2xl"><span className="subtitle">Klasse: </span>{lesson.class.name}</p>
                         <p className="text-2xl"><span className="subtitle">Lektionstyp: </span>{lesson.lesson_type}</p>
                         <p className="text-2xl"><span className="subtitle">Datum: </span> Vom {isoToString(lesson.start_time)} bis {isoToString(lesson.end_time)}</p>
                         <p className="text-2xl"><span className="subtitle">Zimmer: </span>{lesson.room}</p>
