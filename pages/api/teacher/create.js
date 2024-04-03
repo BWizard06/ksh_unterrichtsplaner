@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        const {username, password, email, classIds } = req.body;
+        const { username, password, email, classIds } = req.body;
 
         if (!username || !password || !email || !classIds) {
             return res
@@ -48,11 +48,18 @@ export default async function handler(req, res) {
                 return { teacher, classTeacher };
             });
 
-            const token = jwt.sign({ id: teacherId, username}, process.env.JWT_SECRET, {
-                expiresIn: "7d",
-            });
+            const token = jwt.sign(
+                { id: teacherId, username, role: "teacher" },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: "7d",
+                }
+            );
 
-            res.status(201).json({message: "Lehrer und Klassen erfolgreich erstellt", token});
+            res.status(201).json({
+                message: "Lehrer und Klassen erfolgreich erstellt",
+                token,
+            });
         } catch (error) {
             console.error(
                 "Fehler beim Erstellen des Lehrers und seiner Klassen:",

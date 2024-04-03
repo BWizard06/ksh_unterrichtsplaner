@@ -76,6 +76,9 @@ export default function Login() {
             <div className="max-w-md w-full space-y-8">
                 {!userType ? (
                     <div className="space-y-4">
+                        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+                            Registrieren als
+                        </h2>
                         <button
                             onClick={() => setUserType("Teacher")}
                             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

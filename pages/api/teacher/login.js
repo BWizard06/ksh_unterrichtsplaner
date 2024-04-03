@@ -20,12 +20,15 @@ export default async function handler(req, res) {
             });
 
             if (!user) {
-                return res.status(404).json({ message: 'Teacher not found.' });
+                return res.status(404).json({ message: "Teacher not found." });
             }
 
-            const isPasswordValid = await bcrypt.compare(password, user.password);
+            const isPasswordValid = await bcrypt.compare(
+                password,
+                user.password
+            );
             if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Invalid password.' });
+                return res.status(401).json({ message: "Invalid password." });
             }
 
             const teacher = await prisma.teacher.findUnique({
@@ -33,17 +36,19 @@ export default async function handler(req, res) {
             });
 
             const token = jwt.sign(
-                { id: teacher.id, username: user.username },
+                { id: teacher.id, username: user.username, role: "teacher" },
                 process.env.JWT_SECRET,
-                { expiresIn: '7d' }
+                { expiresIn: "7d" }
             );
 
-            res.json({ message: 'Login successful.', token: token });
+            res.json({ message: "Login successful.", token: token });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'An error occurred while logging in.' });
+            res.status(500).json({
+                message: "An error occurred while logging in.",
+            });
         }
     } else {
-        res.status(405).json({ message: 'Method not allowed.' });
+        res.status(405).json({ message: "Method not allowed." });
     }
 }

@@ -6,15 +6,19 @@ export default async function handler(req, res) {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const { id, username, role } = decoded;
 
             res.status(201).json({
                 valid: true,
                 decoded,
+                id,
+                username,
+                role
             });
         } catch (error) {
             console.error("Fehler beim Überprüfen des Tokens:", error);
-            res.status(500).json({
-                error: "Fehler beim Überprüfen des Tokens",
+            res.status(401).json({
+                error: "Unauthorized",
             });
         }
     } else {

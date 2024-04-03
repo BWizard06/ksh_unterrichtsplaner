@@ -18,11 +18,7 @@ export default async function handler(req, res) {
                     name,
                 },
                 include: {
-                    students: {
-                        include: {
-                            user: true,
-                        },
-                    },
+                    students: true,
                     lessons: true,
                     classTeacher: {
                         include: {

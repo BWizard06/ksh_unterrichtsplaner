@@ -26,6 +26,7 @@ export default async function handler(req, res) {
                     id: student.id,
                     username: student.username,
                     classId: student.class.id,
+                    role: "student",
                 },
                 process.env.JWT_SECRET,
                 { expiresIn: "7d" }

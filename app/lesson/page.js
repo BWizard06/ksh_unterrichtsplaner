@@ -153,6 +153,10 @@ export default function LessionInput() {
         console.log("lessonId:" + lessonId);
     }, [lessonId]);
 
+    useEffect(() => {
+        console.log("classId:" + classId);
+    }, [classId]);
+
     const dateSplitToIso = (date, time) => {
         const [year, month, day] = date.split("-");
         return `${year}-${month}-${day}T${time}:00`;

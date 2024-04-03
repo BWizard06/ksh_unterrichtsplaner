@@ -10,16 +10,14 @@ import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import ReactMarkdown from "react-markdown";
-const {useRouter} = require('next/navigation')
-
-
+const { useRouter } = require("next/navigation");
 
 export default function AppointmentDetail() {
     const searchParams = useParams();
     const appointment_id = searchParams.appointment_id;
     const [appointment, setAppointment] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter()
+    const router = useRouter();
 
     const deleteAppointment = (id) => {
         axios
@@ -30,27 +28,35 @@ export default function AppointmentDetail() {
             })
             .then((response) => {
                 console.log(response);
-                router.push('/calendar');
+                router.push("/calendar");
             })
             .catch((error) => {
                 console.log(error);
             });
-    }
+    };
 
     useEffect(() => {
-/*
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push('/login')
+            router.push("/login");
             return;
         }
 
-        axios.post('/api/verifyToken', {token}).then((response) => {
-            if (!response.data.valid) {
-                router.push('/login')
-            }
-        })*/
+        axios
+            .post("/api/verifyToken", { token })
+            .then((response) => {
+                if (!response.data.valid) {
+                    router.push("/login");
+                }
+            })
+            .catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    router.push("/login");
+                } else {
+                    console.error("Fehler beim Überprüfen des Tokens:", error);
+                }
+            });
 
         axios
             .get("/api/appointment/getById", {
@@ -69,18 +75,23 @@ export default function AppointmentDetail() {
             });
     }, []);
 
-    const isoToString = (isoString) =>{
-        let dateString = isoString.split('T')[0]
-        let year = dateString.split('-')[0]
-        let month = dateString.split('-')[1]
-        let day = dateString.split('-')[2]
+    const isoToString = (isoString) => {
+        let dateString = isoString.split("T")[0];
+        let year = dateString.split("-")[0];
+        let month = dateString.split("-")[1];
+        let day = dateString.split("-")[2];
 
-        let time = isoString.substring(isoString.indexOf('T') + 1).split(':')[0]
-        let hour = isoString.substring(isoString.indexOf('T') + 1).split(':')[1]
+        let time = isoString
+            .substring(isoString.indexOf("T") + 1)
+            .split(":")[0];
+        let hour = isoString
+            .substring(isoString.indexOf("T") + 1)
+            .split(":")[1];
 
-        dateString = day+'.'+month+'.'+year+', um '+time+':'+hour
-        return dateString
-    }
+        dateString =
+            day + "." + month + "." + year + ", um " + time + ":" + hour;
+        return dateString;
+    };
 
     return (
         <main className="flex flex-col items-center justify-between">
@@ -97,27 +108,33 @@ export default function AppointmentDetail() {
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
                             <ArrowLeftRectangle />
-                            <h1 className="title">
-                                {appointment.title}
-                            </h1>
+                            <h1 className="title">{appointment.title}</h1>
                             <TrashBinIcon />
                             <ShareLinkIcon />
                             <EditPenIcon />
                         </div>
-                    
                     </div>
                     <div className="space-y-1">
-                        <p className="text-2xl"><span className="subtitle">Datum: </span> Vom {isoToString(appointment.start_time)} bis {isoToString(appointment.end_time)}</p>
-                        <p className="text-2xl"><span className="subtitle">Ort: </span>{appointment.location}</p>
+                        <p className="text-2xl">
+                            <span className="subtitle">Datum: </span> Vom{" "}
+                            {isoToString(appointment.start_time)} bis{" "}
+                            {isoToString(appointment.end_time)}
+                        </p>
+                        <p className="text-2xl">
+                            <span className="subtitle">Ort: </span>
+                            {appointment.location}
+                        </p>
                     </div>
-                    
+
                     {appointment.notes ? (
                         <div className="mt-12">
                             <p className="subtitle">Notizen</p>
                             <ReactMarkdown>{appointment.notes}</ReactMarkdown>
                         </div>
-                    ):(
-                        <p className="subtitle mt-12">Keine Notizen eingetragen!</p>
+                    ) : (
+                        <p className="subtitle mt-12">
+                            Keine Notizen eingetragen!
+                        </p>
                     )}
                 </div>
             )}
