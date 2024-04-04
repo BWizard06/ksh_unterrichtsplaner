@@ -11,7 +11,6 @@ import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import "@/app/globals.css";
-import { use } from "marked";
 import { useRouter } from "next/navigation";
 
 export default function LessonDetail() {

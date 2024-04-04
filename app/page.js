@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
     const router = useRouter();
     return (
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center ">
             <div className="max-w-max mx-auto">
                 <div className="relative group cursor-pointer">
                     <div className="absolute rounded-full -inset-1 bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 blur opacity-35 group-hover:opacity-100 duration-500"></div>

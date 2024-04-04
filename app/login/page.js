@@ -3,6 +3,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
     const [userType, setUserType] = useState(null);
@@ -10,6 +11,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [availableClasses, setAvailableClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
+    const router = useRouter()
 
     useEffect(() => {
         axios.get("/api/class/getAll").then((response) => {
@@ -27,6 +29,7 @@ export default function LoginPage() {
                 .then((response) => {
                     const { token } = response.data;
                     localStorage.setItem("token", token);
+                    router.push('/calendar')
                 });
         } else {
             axios
@@ -37,6 +40,7 @@ export default function LoginPage() {
                 .then((response) => {
                     const { token } = response.data;
                     localStorage.setItem("token", token);
+                    router.push('/calendar')
                 });
         }
     };

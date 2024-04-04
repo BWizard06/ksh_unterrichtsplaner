@@ -36,6 +36,7 @@ export default function Login() {
                 .then((response) => {
                     const {token} = response.data;
                     localStorage.setItem("token", token);
+                    router.push('/calendar')
                 });
         } else {
             const createdClasses = await Promise.all(
@@ -59,7 +60,7 @@ export default function Login() {
                     const { username } = jwt.decode(token);
                     localStorage.setItem("token", token);
                     localStorage.setItem("username", username);
-                    router.push("/calendar");
+                    router.push('/calendar');
                 })
                 .catch((error) => {
                     console.log(error);
