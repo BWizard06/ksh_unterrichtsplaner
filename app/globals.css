@@ -5,7 +5,7 @@
 
 
 body{
-  @apply bg-blue-200/50
+  @apply bg-blue-200/50;
 }
 
   .dark {
@@ -135,19 +135,26 @@ body{
   @apply p-2 w-40 border-2 placeholder-black text-end text-black border-indigo-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
 
-.backBtn{
-  @apply p-2 bg-red-500 hover:bg-red-600 focus:bg-red-700 focus:outline-none border-none rounded-xl text-white flex justify-end items-end cursor-pointer;
+.useTeacherBtn{
+  @apply py-1 px-3 w-36 bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-lg text-white text-2xl font-bold flex justify-center items-center cursor-pointer focus:ring-2 focus:ring-blue-400/50;;
+}
 
+.useStudentBtn{
+  @apply py-1 px-3 w-36 bg-sky-300 hover:bg-sky-400 focus:bg-sky-500 focus:outline-none border-none rounded-lg text-white text-2xl font-bold flex justify-center items-center cursor-pointer focus:ring-2 focus:ring-blue-400/50;;
 }
 
 .title{
-  @apply text-3xl font-extrabold text-black
+  @apply text-3xl font-extrabold text-black;
 }
 
 .subtitle{
-  @apply text-xl font-bold text-black
+  @apply text-xl font-bold text-black;
 }
 
 .loginInputField{
-  @apply appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-black text-black focus:outline-none focus:ring-2 focus:ring-blue-400/50
+  @apply appearance-none w-full shadow-inner px-3 py-2 border rounded-lg border-indigo-300 placeholder-black text-black focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+}
+
+.registerInputField{
+  @apply appearance-none relative block w-full px-3 py-2 border placeholder-black text-black border-indigo-300 focus:outline-none focus:ring-2 focus:ring-blue-400/50;
 }
