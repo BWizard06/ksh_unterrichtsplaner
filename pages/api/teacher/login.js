@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         if (!username || !password) {
             return res
                 .status(400)
-                .json({ message: "Username and password are required." });
+                .json({ message: "Username und Passwort sind erforderlich" });
         }
 
         try {
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             });
 
             if (!user) {
-                return res.status(404).json({ message: "Teacher not found." });
+                return res.status(404).json({ message: "Lehrer nicht gefunden" });
             }
 
             const isPasswordValid = await bcrypt.compare(

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const { id, username, role } = decoded;
 
-            res.status(201).json({
+            res.status(200).json({
                 valid: true,
                 decoded,
                 id,

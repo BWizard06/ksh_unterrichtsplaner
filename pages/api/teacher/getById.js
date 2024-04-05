@@ -32,7 +32,7 @@ export default async function handler(req, res) {
                     .json({ error: "Lehrer nicht gefunden. " });
             }
 
-            res.status(201).json(teacher);
+            res.status(200).json(teacher);
         } catch {
             res.status(500).json({
                 error: "Fehler beim Holen des Lehrers und seiner Klassen",

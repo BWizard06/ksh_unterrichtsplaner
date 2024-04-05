@@ -37,7 +37,7 @@ export default async function handler(req, res) {
                 return res.status(404).json({ error: "User nicht gefunden. " });
             }
 
-            res.status(201).json(user);
+            res.status(200).json(user);
         } catch {
             res.status(500).json({
                 error: "Fehler beim Holen des Users",

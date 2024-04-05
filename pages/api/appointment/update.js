@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                 data: { teacherId, title, start_time, end_time, notes },
             });
 
-            res.json({ message: 'Appointment updated successfully.', appointment: updatedAppointment });
+            res.json({ message: 'Appointment erfolgreich geändert', appointment: updatedAppointment });
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'An error occurred while updating the appointment.' });

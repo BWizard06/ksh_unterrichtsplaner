@@ -30,7 +30,7 @@ export default async function handler(req, res) {
                 });
             }
 
-            res.status(201).json(student);
+            res.status(200).json(student);
         } catch {
             res.status(500).json({
                 error: "Fehler beim Holen des Schülers",
