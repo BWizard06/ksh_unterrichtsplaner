@@ -2,16 +2,16 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import TypewriterEffect from '@/components/TypeWriter'
+import TypewriterEffect from '@/components/TypeWriterEffect'
 
 export default function Home() {
     const router = useRouter();
     return (
         <main className="flex flex-col h-screen space-x-20 items-center justify-center">
-            <span className='title'><TypewriterEffect /></span>
-            <div className="flex flex-col items-center ">
-                
-                <div className="w-48">
+            <div className="flex flex-col items-center">
+                <span className='title'><TypewriterEffect wordArray='KSH-Unterrichtsplaner' /></span>
+
+                <div className="w-48 mt-20">
                     <div className="relative group cursor-pointer">
                         <div className="absolute rounded-full -inset-1 bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 blur opacity-35 group-hover:opacity-100 duration-500"></div>
                         <div

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
-import BackToCalendar from "@/components/BackToCalendar";
+import BackToCalendar from "@/components/BackBtn";
 import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";

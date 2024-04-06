@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import BackToCalendar from '@/components/BackToCalendar'
+import BackToCalendar from '@/components/BackBtn'
 
 export default function Login() {
     const [userType, setUserType] = useState(null);

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import ReactMarkdown from "react-markdown";
-import BackToCalendar from "@/components/BackToCalendar";
+import BackBtn from "@/components/BackBtn";
 import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
@@ -124,7 +124,7 @@ export default function LessonDetail() {
                 <div className="flex flex-col items-center justify-center text-center min-h-screen">
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
-                            <BackToCalendar />
+                            <BackBtn destination={'calendar'} />
                             <h1 className="title">{lesson.title}</h1>
                             <TrashBinIcon />
                             <ShareLinkIcon />

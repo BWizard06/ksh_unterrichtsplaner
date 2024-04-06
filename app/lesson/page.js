@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToast } from "@/components/ui/use-toast";
-import BackToCalendar from "@/components/BackToCalendar";
+import BackToCalendar from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 
 export default function LessionInput() {
