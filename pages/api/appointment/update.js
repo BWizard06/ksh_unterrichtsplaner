@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === "PUT") {
-        const { id, teacherId, title, start_time, end_time, notes } = req.body;
+        const { id, teacherId, title, start_time, end_time, notes, location } = req.body;
 
         if (!id || !teacherId || !title || !start_time || !end_time) {
             return res
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         try {
             const updatedAppointment = await prisma.appointment.update({
                 where: { id: id },
-                data: { teacherId, title, start_time, end_time, notes },
+                data: { teacherId, title, start_time, end_time, notes, location },
             });
 
             res.json({ message: 'Appointment erfolgreich geändert', appointment: updatedAppointment });

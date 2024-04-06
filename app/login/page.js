@@ -4,6 +4,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import BackBtn from "@/components/BackBtn";
 
 export default function LoginPage() {
     const [userType, setUserType] = useState(null);
@@ -52,11 +53,14 @@ export default function LoginPage() {
     return (
         <main className="flex items-center justify-center min-h-screen">
             <div className="max-w-md w-full space-y-8">
+                <BackBtn destination=''/>
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
-                        <h2 className="text-center text-3xl font-extrabold text-gray-900">
-                            Anmelden als ...
-                        </h2>
+                        <div className="flex justify-center items-center">
+                            <h2 className="title">
+                                Anmelden als ...
+                            </h2>
+                        </div>
                         <div className="flex-row justify-center items-center absolute space-y-5">
                             <button
                                 onClick={() => setUserType("Teacher")}

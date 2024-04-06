@@ -117,77 +117,102 @@ export default function Calendar() {
                     />
                 </div>
             ) : (
-                <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="timeGridWeek"
-                    customButtons={{
-                        terminimport: {
-                            text: "Termin eintragen",
-                            click: function () {
-                                window.location.href = "/appointment";
+                <div>
+                    <h1>
+                        {role === "teacher"
+                            ? `Kalender für: ${username}`
+                            : `Kalendar für: ${username}`}
+                    </h1>
+                    <FullCalendar
+                        plugins={[
+                            dayGridPlugin,
+                            timeGridPlugin,
+                            interactionPlugin,
+                        ]}
+                        initialView="timeGridWeek"
+                        customButtons={{
+                            terminimport: {
+                                text: "Termin eintragen",
+                                click: function () {
+                                    router.push("/appointment");
+                                },
                             },
-                        },
-                        lessoninput: {
-                            text: "Lektion eintragen",
-                            click: function () {
-                                window.location.href = "/lesson";
+                            lessoninput: {
+                                text: "Lektion eintragen",
+                                click: function () {
+                                    router.push("/lesson");
+                                },
                             },
-                        },
-                    }}
-                    headerToolbar={{
-                        start: "terminimport lessoninput",
-                        center: "prev today next title",
-                        end: "dayGridMonth timeGridWeek",
-                    }}
-                    slotMinTime={"06:00:00"}
-                    timeZone="Europe/Zurich"
-                    slotMaxTime={"22:00:00"}
-                    contentHeight={"auto"}
-                    locale={dE}
-                    weekNumbers={true}
-                    weekNumberCalculation={"ISO"}
-                    firstDay={1}
-                    eventClick={(info) => {
-                        info.event.extendedProps.type == "lesson"
-                            ? router.push(`/lesson/${info.event.id}`)
-                            : router.push(`/appointment/${info.event.id}`);
-                    }}
-                    stickyHeaderDates={true}
-                    aspectRatio={2}
-                    events={[
-                        ...lessons.map((lesson) => ({
-                            id: lesson.id,
-                            title: lesson.title,
-                            start: lesson.start_time,
-                            end: lesson.end_time,
-                            color: getColorLessonType(lesson.lesson_type),
-                            type: "lesson",
-                        })),
-                        ...appointments.map((appointment) => ({
-                            id: appointment.id,
-                            title: appointment.title,
-                            start: appointment.start_time,
-                            end: appointment.end_time,
-                            color: "#3c3ffa",
-                            type: "appointment",
-                        })),
-                        {
-                            daysOfWeek: [0, 6],
-                            display: "background",
-                            color: "#30cb00",
-                            allDay: true,
-                        },
-                        {
-                            daysOfWeek: [5],
-                            color: "#c70000",
-                            startTime: "16:15",
-                            endTime: "17:00",
-                            title: "Nachprüfung",
-                            allDay: false,
-                        },
-                    ]}
-                    allDaySlot={false}
-                />
+                            homework: {
+                                text: "Hausaufgaben anzeigen",
+                                click: function () {
+                                    router.push("/homework");
+                                },
+                            },
+                        }}
+                        headerToolbar={
+                            role === "teacher"
+                                ? {
+                                      start: "terminimport lessoninput",
+                                      center: "prev today next title",
+                                      end: "dayGridMonth timeGridWeek",
+                                  }
+                                : {
+                                      start: "homework",
+                                      center: "prev today next title",
+                                      end: "dayGridMonth timeGridWeek",
+                                  }
+                        }
+                        slotMinTime={"06:00:00"}
+                        timeZone={"locale"}
+                        slotMaxTime={"22:00:00"}
+                        contentHeight={"auto"}
+                        locale={dE}
+                        weekNumbers={true}
+                        weekNumberCalculation={"ISO"}
+                        firstDay={1}
+                        eventClick={(info) => {
+                            info.event.extendedProps.type == "lesson"
+                                ? router.push(`/lesson/${info.event.id}`)
+                                : router.push(`/appointment/${info.event.id}`);
+                        }}
+                        stickyHeaderDates={true}
+                        aspectRatio={2}
+                        events={[
+                            ...lessons.map((lesson) => ({
+                                id: lesson.id,
+                                title: lesson.title,
+                                start: lesson.start_time,
+                                end: lesson.end_time,
+                                color: getColorLessonType(lesson.lesson_type),
+                                type: "lesson",
+                            })),
+                            ...appointments.map((appointment) => ({
+                                id: appointment.id,
+                                title: appointment.title,
+                                start: appointment.start_time,
+                                end: appointment.end_time,
+                                color: "#3c3ffa",
+                                type: "appointment",
+                            })),
+                            {
+                                daysOfWeek: [0, 6],
+                                display: "background",
+                                color: "#30cb00",
+                                allDay: true,
+                            },
+                            {
+                                daysOfWeek: [5],
+                                color: "#c70000",
+                                startTime: "16:15",
+                                endTime: "17:00",
+                                title: "Nachprüfung",
+                                allDay: false,
+                            },
+                        ]}
+                        allDaySlot={false}
+                    />
+                </div>
             )}
         </main>
     );

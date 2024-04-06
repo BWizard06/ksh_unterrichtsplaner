@@ -12,6 +12,7 @@ import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import "@/app/globals.css";
 import { useRouter } from "next/navigation";
+import { utc2Local } from '@/lib/utc2local'
 
 export default function LessonDetail() {
     const searchParams = useParams();
@@ -19,8 +20,25 @@ export default function LessonDetail() {
     const [lesson, setLesson] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [token, setToken] = useState();
+    const [role, setRole] = useState();
     const router = useRouter();
     const [visibleFiles, setVisibleFiles] = useState([]);
+
+    const deleteLesson = (id) => {
+        axios
+            .delete("/api/lesson/delete", {
+                params: {
+                    id: id,
+                },
+            })
+            .then((response) => {
+                console.log(response);
+                router.push("/calendar");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     const exportFile = (file) => {
         fetch(`/api/file/getBinaryById?id=${file.id}`)
@@ -75,6 +93,7 @@ export default function LessonDetail() {
             .then((response) => {
                 if (response.data.valid) {
                     setToken(response.data);
+                    setRole(response.data.role);
                 }
             })
             .catch((error) => {
@@ -124,11 +143,26 @@ export default function LessonDetail() {
                 <div className="flex flex-col items-center justify-center text-center min-h-screen">
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
-                            <BackBtn destination={'calendar'} />
+                            <BackBtn destination={"calendar"} />
                             <h1 className="title">{lesson.title}</h1>
-                            <TrashBinIcon />
+                            {role === "teacher" && (
+                                <TrashBinIcon
+                                    onClick={() => {
+                                        deleteLesson(lesson.id);
+                                        router.back();
+                                    }}
+                                />
+                            )}
                             <ShareLinkIcon />
-                            <EditPenIcon />
+                            {role === "teacher" && (
+                                <EditPenIcon
+                                    onClick={() => {
+                                        router.push(
+                                            `/lesson/update/${lesson.id}`
+                                        );
+                                    }}
+                                />
+                            )}
                         </div>
                     </div>
                     <div className="space-y-1">

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import BackToCalendar from '@/components/BackBtn'
+import BackBtn from '@/components/BackBtn'
 
 export default function Login() {
     const [userType, setUserType] = useState(null);
@@ -47,14 +47,14 @@ export default function Login() {
                         .then((response) => response.data.id)
                 )
             );
-            setClassIds(...createdClasses);
+            setClassIds([...selectedClass, ...createdClasses])
 
             axios
                 .post("/api/teacher/create", {
                     username,
                     password,
                     email,
-                    classIds: createdClasses,
+                    classIds: classIds,
                 })
                 .then((response) => {
                     const { token } = response.data;
@@ -76,6 +76,7 @@ export default function Login() {
     return (
         <main className="flex items-center justify-center min-h-screen w-full">
             <div className="space-y-8">
+                <BackBtn destination='' />
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
                         <h2 className="title">

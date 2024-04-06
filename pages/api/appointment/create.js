@@ -29,8 +29,8 @@ export default async function handler(req, res) {
                 data: {
                     teacherId,
                     title,
-                    start_time: new Date(start_time),
-                    end_time: new Date(end_time),
+                    start_time: start_time,
+                    end_time: end_time,
                     notes,
                     location,
                 },

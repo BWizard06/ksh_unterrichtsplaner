@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToast } from "@/components/ui/use-toast";
-import BackToCalendar from "@/components/BackBtn";
+import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
+import { utc2Local } from '@/lib/utc2local';
 
 export default function LessionInput() {
     const [subject, setSubject] = useState();
@@ -89,9 +90,6 @@ export default function LessionInput() {
         }
     }, [requestedClass]);
 
-    useEffect(() => {
-        console.log("teacherData", teacherData);
-    }, [teacherData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -109,8 +107,8 @@ export default function LessionInput() {
                 classId,
                 teacherId: teacherData.id,
                 title,
-                start_time: new Date(lessonStartTime).toISOString(),
-                end_time: new Date(lessonEndTime).toISOString(),
+                start_time: utc2Local(lessonStartTime),
+                end_time: utc2Local(lessonEndTime),
                 lesson_type: lessonType,
                 lesson_goals: lessonGoals,
                 homework,
@@ -131,6 +129,7 @@ export default function LessionInput() {
                             description:
                                 "Die Lektion wurde erfolgreich erstellt.",
                             variant: "success",
+                            duration: 5000,
                         });
                         if (!files) {
                             router.push(`/calendar`);
@@ -164,7 +163,13 @@ export default function LessionInput() {
                                     })
                                     .then((response) => {
                                         console.log(response);
-                                        router.push(`/calendar`);
+                                        toast({
+                                            title: "Lektion mit Dateien hochgeladen",
+                                            description:
+                                                "Die Lektion wurde erfolgreich erstellt.",
+                                            variant: "success",
+                                            duration: 5000,
+                                        });
                                     })
                                     .catch((error) => {
                                         console.log(error);
@@ -178,6 +183,7 @@ export default function LessionInput() {
                             description:
                                 "Fehler: " + error.response.data.message,
                             variant: "destructive",
+                            duration: 5000,
                         });
                         console.log(error);
                     });
@@ -188,6 +194,12 @@ export default function LessionInput() {
             lessonEndTime.setDate(lessonEndTime.getDate() + 7);
 
         }
+    };
+
+    const formatToLocalISOString = (date) => {
+        const offset = date.getTimezoneOffset();
+        const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
+        return adjustedDate.toISOString().slice(0, 19).replace('T', ' ');
     };
 
     useEffect(() => {
@@ -216,7 +228,7 @@ export default function LessionInput() {
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">
                         <div className="flex justify-center items-center">
-                            <BackToCalendar />
+                            <BackBtn destination="calendar" />
                             <h1 className="title">Lektion erfassen</h1>
                         </div>
 
@@ -455,10 +467,6 @@ export default function LessionInput() {
                                         type="submit"
                                         value="Lektion erfassen"
                                         onClick={handleSubmit}
-                                        /*(e) =>{ 
-                                            var allInputs = document.querySelectorAll('input:not([type=submit])');
-                                            var allTeaxtareas = document.querySelectorAll('textarea');
-                                            allInputs.forEach(singleInput => singleInput.value = '');}}*/
                                     />
                                 </div>
                             </form>

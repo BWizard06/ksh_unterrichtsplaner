@@ -89,8 +89,8 @@ model Appointment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   teacherId String @db.ObjectId
   title     String
-  start_time DateTime
-  end_time   DateTime
+  start_time DateTime @default(now()) @db.Timestamp()
+  end_time   DateTime @default(now()) @db.Timestamp()
   notes     String?
   location  String?
   teacher   Teacher  @relation(fields: [teacherId], references: [id])

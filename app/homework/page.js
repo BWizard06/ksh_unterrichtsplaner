@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PulseLoader from "react-spinners/PulseLoader";
+import BackBtn from "@/components/BackBtn";
 
 export default function Homework() {
     const [homework, setHomework] = useState([]);
@@ -75,6 +76,8 @@ export default function Homework() {
                     dueDate: lesson.start_time,
                     homework: lesson.homework,
                     subject: lesson.subject,
+                    id: lesson.id,
+                    name: lesson.title,
                 };
             })
             .filter((hw) => hw.homework != null);
@@ -99,9 +102,10 @@ export default function Homework() {
                 </div>
             ) : (
                 <div className="w-full max-w-4xl p-5">
-                    <h1 className="text-3xl font-extrabold text-center mb-10">
+                    <h1 className="title text-center mb-10">
                         Hausaufgaben für {username}
                     </h1>
+                    <BackBtn destination="calendar" />
                     {homework.length > 0 ? (
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
@@ -125,6 +129,12 @@ export default function Homework() {
                                         >
                                             Fach
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Lektion
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -145,6 +155,18 @@ export default function Homework() {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">
                                                     {hw.subject}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div
+                                                    className="text-sm text-gray-900 underline cursor-pointer"
+                                                    onClick={() => {
+                                                        router.push(
+                                                            `/lesson/${hw.id}`
+                                                        );
+                                                    }}
+                                                >
+                                                    {hw.name}
                                                 </div>
                                             </td>
                                         </tr>

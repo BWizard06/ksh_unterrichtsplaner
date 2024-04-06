@@ -1,16 +1,14 @@
 "use client";
 
-import React, { use } from "react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
-import BackToCalendar from "@/components/BackBtn";
+import BackBtn from "@/components/BackBtn";
 import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
-import ReactMarkdown from "react-markdown";
-const { useRouter } = require("next/navigation");
+import { useRouter } from 'next/navigation'
 
 export default function AppointmentDetail() {
     const searchParams = useParams();
@@ -49,7 +47,6 @@ export default function AppointmentDetail() {
             .then((response) => {
                 if (response.data.valid) {
                     setToken(response.data);
-                    
                 }
                 if (response.data.role === "student") {
                     router.push("/calendar");
@@ -116,17 +113,31 @@ export default function AppointmentDetail() {
                 <div className="flex flex-col items-center justify-center text-center min-h-screen">
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
-                            <BackToCalendar />
+                            <BackBtn destination="calendar" />
                             <h1 className="title">{appointment.title}</h1>
-                            <TrashBinIcon />
+                            <TrashBinIcon
+                                onClick={() => {
+                                    deleteAppointment(appointment.id);
+                                    router.back();
+                                }}
+                            />
                             <ShareLinkIcon />
-                            <EditPenIcon />
+                            <EditPenIcon
+                                onClick={() => {
+                                    router.push(
+                                        `/appointment/update/${appointment.id}`
+                                    );
+                                }}
+                            />
                         </div>
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-1 mt-8">
                         <p className="text-2xl">
-                            <span className="subtitle">Datum: </span> Vom{" "}
-                            {isoToString(appointment.start_time)} bis{" "}
+                            <span className="subtitle">Lektionsstart: </span>
+                            {isoToString(appointment.start_time)}
+                        </p>
+                        <p className="text-2xl">
+                            <span className="subtitle">Lektionsende: </span>
                             {isoToString(appointment.end_time)}
                         </p>
                         <p className="text-2xl">
@@ -138,7 +149,7 @@ export default function AppointmentDetail() {
                     {appointment.notes ? (
                         <div className="mt-12">
                             <p className="subtitle">Notizen</p>
-                            <ReactMarkdown>{appointment.notes}</ReactMarkdown>
+                            {appointment.notes}
                         </div>
                     ) : (
                         <p className="subtitle mt-12">

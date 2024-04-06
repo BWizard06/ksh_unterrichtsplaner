@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import ExcelReader from "@/components/ExcelReader";
-import BackToCalendar from "@/components/BackBtn";
+import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { PulseLoader } from "react-spinners";
+import { utc2Local } from "@/lib/utc2local";
 
 export default function appointmentInput() {
     const [title, setTitle] = useState();
@@ -25,12 +26,15 @@ export default function appointmentInput() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        let appointmentStartTime = new Date(startTime);
+        let appointmentEndTime = new Date(endTime);
+
         axios
             .post("/api/appointment/create", {
-                teacherId: "65f35c82a3625a11fa36b61e",
+                teacherId: teacherData.id,
                 title: title,
-                start_time: startTime,
-                end_time: endTime,
+                start_time: utc2Local(appointmentStartTime),
+                end_time: utc2Local(appointmentEndTime),
                 notes: notes,
                 location: location,
             })
@@ -40,6 +44,7 @@ export default function appointmentInput() {
                     title: "Termin erstellt",
                     description: "Der Termin wurde erfolgreich erstellt.",
                     variant: "success",
+                    duration: 5000,
                 });
             })
             .catch((error) => {
@@ -48,9 +53,14 @@ export default function appointmentInput() {
                     title: "Fehler beim Erstellen des Termins",
                     description: "Fehler: " + error.response.data.message,
                     variant: "destructive",
+                    duration: 5000,
                 });
             });
     };
+
+    useEffect(()=>{
+        console.log('Starttime'+startTime)
+    }, [startTime])
 
     function handleFileChange(e) {
         setFile(e.target.files[0]);
@@ -118,7 +128,7 @@ export default function appointmentInput() {
             ) : (
                 <div className="flex items-center justify-center text-center min-h-screen w-full">
                     <div className="space-y-2">
-                        <BackToCalendar />
+                        <BackBtn destination="calendar" />
                         <h1 className="title">Termin erfassen</h1>
 
                         <div
@@ -222,7 +232,7 @@ export default function appointmentInput() {
                             </form>
 
                             <div className="flex flex-col items-center justify-center">
-                                <h2 className="text-xl font-bold mt-16 mb-5">
+                                <h2 className="subtitle mt-16 mb-5">
                                     Oder von Excel einlesen lassen
                                 </h2>
                                 <form className="inputForm flex flex-col space-y-3 justify-center items-center">
