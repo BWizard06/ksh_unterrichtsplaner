@@ -2,11 +2,13 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import TypewriterEffect from '@/components/TypeWriter'
 
 export default function Home() {
     const router = useRouter();
     return (
-        <main className="flex h-screen space-x-20 items-center justify-center">
+        <main className="flex flex-col h-screen space-x-20 items-center justify-center">
+            <span className='title'><TypewriterEffect /></span>
             <div className="flex flex-col items-center ">
                 
                 <div className="w-48">

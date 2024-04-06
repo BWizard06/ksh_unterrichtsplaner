@@ -14,26 +14,83 @@ export default function Calendar() {
     const [lessons, setLessons] = useState([]);
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [token, setToken] = useState();
+    const [role, setRole] = useState();
+    const [username, setUsername] = useState();
+    const [studentClass, setStudentClass] = useState();
     const router = useRouter();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            router.push("/login");
+        }
+
         axios
-            .get("/api/teacher/getByName", {
-                params: {
-                    username: "andreProbst",
-                },
-            })
+            .post("/api/verifyToken", { token })
             .then((response) => {
-                setTeacherData(response.data);
-                setLessons(response.data.lessons);
-                setAppointments(response.data.appointments);
-                setIsLoading(false);
+                if (response.data.valid) {
+                    setToken(response.data);
+                    setRole(response.data.role);
+                    setUsername(response.data.username);
+                    if (response.data.role === "teacher") {
+                        axios
+                            .get("/api/teacher/getByName", {
+                                params: {
+                                    username: response.data.username,
+                                },
+                            })
+                            .then((response) => {
+                                setTeacherData(response.data);
+                                setLessons(response.data.lessons);
+                                setAppointments(response.data.appointments);
+                                setIsLoading(false);
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                setIsLoading(false);
+                            });
+                    } else {
+                        axios
+                            .get("/api/student/getByName", {
+                                params: {
+                                    username: response.data.username,
+                                },
+                            })
+                            .then((response) => {
+                                axios
+                                    .get("/api/class/getById", {
+                                        params: {
+                                            id: response.data.classId,
+                                        },
+                                    })
+                                    .then((response) => {
+                                        setLessons(response.data.lessons);
+                                        setIsLoading(false);
+                                    });
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                setIsLoading(false);
+                            });
+                    }
+                } else {
+                    router.push("/login");
+                }
             })
             .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
+                if (error.response && error.response.status === 401) {
+                    router.push("/login");
+                } else {
+                    console.error("Fehler beim Überprüfen des Tokens:", error);
+                }
             });
     }, []);
+
+    useEffect(() => {
+        console.log("Role", role);
+    }, [role]);
 
     const getColorLessonType = (lessonType) => {
         if (lessonType == "pruefung") {
@@ -44,6 +101,10 @@ export default function Calendar() {
             return "#020300";
         }
     };
+
+    useEffect(() => {
+        console.log("lessons", lessons);
+    }, [lessons]);
 
     return (
         <main className="flex flex-col items-center justify-between p-5">
@@ -93,61 +154,38 @@ export default function Calendar() {
                     }}
                     stickyHeaderDates={true}
                     aspectRatio={2}
-                    events={
-                        teacherData &&
-                        teacherData.lessons &&
-                        teacherData.lessons.length > 0
-                            ? [
-                                  ...lessons.map((lesson) => ({
-                                      id: lesson.id,
-                                      title: lesson.title,
-                                      start: lesson.start_time,
-                                      end: lesson.end_time,
-                                      color: getColorLessonType(
-                                          lesson.lesson_type
-                                      ),
-                                      type: "lesson",
-                                  })),
-                                  ...appointments.map((appointment) => ({
-                                      id: appointment.id,
-                                      title: appointment.title,
-                                      start: appointment.start_time,
-                                      end: appointment.end_time,
-                                      color: "#3c3ffa",
-                                      type: "appointment",
-                                  })),
-                                  {
-                                      daysOfWeek: [0, 6],
-                                      display: "background",
-                                      color: "#30cb00",
-                                      allDay: true,
-                                    },
-                                    {
-                                        daysOfWeek: [5],
-                                        color: "#c70000",
-                                        startTime: '16:15',
-                                        endTime: '17:00',
-                                        title: 'Nachprüfung',
-                                        allDay: false,
-                                    }
-                              ]
-                            : [
-                                {
-                                    daysOfWeek: [0, 6],
-                                    display: "background",
-                                    color: "green",
-                                    allDay: true,
-                                },
-                                {
-                                    daysOfWeek: [5],
-                                    color: "red",
-                                    startTime: '16:15',
-                                    endTime: '17:00',
-                                    title: 'Nachprüfung'
-                                }
-
-                            ]
-                    }
+                    events={[
+                        ...lessons.map((lesson) => ({
+                            id: lesson.id,
+                            title: lesson.title,
+                            start: lesson.start_time,
+                            end: lesson.end_time,
+                            color: getColorLessonType(lesson.lesson_type),
+                            type: "lesson",
+                        })),
+                        ...appointments.map((appointment) => ({
+                            id: appointment.id,
+                            title: appointment.title,
+                            start: appointment.start_time,
+                            end: appointment.end_time,
+                            color: "#3c3ffa",
+                            type: "appointment",
+                        })),
+                        {
+                            daysOfWeek: [0, 6],
+                            display: "background",
+                            color: "#30cb00",
+                            allDay: true,
+                        },
+                        {
+                            daysOfWeek: [5],
+                            color: "#c70000",
+                            startTime: "16:15",
+                            endTime: "17:00",
+                            title: "Nachprüfung",
+                            allDay: false,
+                        },
+                    ]}
                     allDaySlot={false}
                 />
             )}

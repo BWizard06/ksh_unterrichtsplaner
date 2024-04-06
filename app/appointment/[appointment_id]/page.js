@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
-import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
+import BackToCalendar from "@/components/BackToCalendar";
 import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
@@ -17,6 +17,7 @@ export default function AppointmentDetail() {
     const appointment_id = searchParams.appointment_id;
     const [appointment, setAppointment] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [token, setToken] = useState();
     const router = useRouter();
 
     const deleteAppointment = (id) => {
@@ -46,8 +47,12 @@ export default function AppointmentDetail() {
         axios
             .post("/api/verifyToken", { token })
             .then((response) => {
-                if (!response.data.valid) {
-                    router.push("/login");
+                if (response.data.valid) {
+                    setToken(response.data);
+                    
+                }
+                if (response.data.role === "student") {
+                    router.push("/calendar");
                 }
             })
             .catch((error) => {
@@ -74,6 +79,10 @@ export default function AppointmentDetail() {
                 setIsLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        console.log("token", token);
+    }, [token]);
 
     const isoToString = (isoString) => {
         let dateString = isoString.split("T")[0];
@@ -107,7 +116,7 @@ export default function AppointmentDetail() {
                 <div className="flex flex-col items-center justify-center text-center min-h-screen">
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
-                            <ArrowLeftRectangle />
+                            <BackToCalendar />
                             <h1 className="title">{appointment.title}</h1>
                             <TrashBinIcon />
                             <ShareLinkIcon />

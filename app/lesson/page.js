@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useToast } from "@/components/ui/use-toast";
-import ArrowLeftRectangle from "@/components/ArrowLeftRectangle";
+import BackToCalendar from "@/components/BackToCalendar";
+import { useRouter } from "next/navigation";
 
 export default function LessionInput() {
     const [subject, setSubject] = useState();
@@ -25,23 +26,52 @@ export default function LessionInput() {
     const [teacherData, setTeacherData] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [recurrence, setRecurrence] = useState();
+    const [token, setToken] = useState();
+    const [role, setRole] = useState();
     const { toast } = useToast();
+    const router = useRouter();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            router.push("/login");
+            return;
+        }
+
         axios
-            .get("/api/teacher/getByName", {
-                params: {
-                    username: "andreProbst",
-                },
-            })
+            .post("/api/verifyToken", { token })
             .then((response) => {
-                setTeacherData(response.data);
-                setIsLoading(false);
-                console.log(response.data);
+                if (response.data.valid) {
+                    setToken(response.data);
+                    setRole(response.data.role);
+                }
+                if (response.data.role === "student") {
+                    router.push("/calendar");
+                } else {
+                    axios
+                        .get("/api/teacher/getByName", {
+                            params: {
+                                username: response.data.username,
+                            },
+                        })
+                        .then((response) => {
+                            setTeacherData(response.data);
+                            setIsLoading(false);
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            setIsLoading(false);
+                        });
+                }
             })
             .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
+                if (error.response && error.response.status === 401) {
+                    router.push("/login");
+                } else {
+                    console.error("Fehler beim Überprüfen des Tokens:", error);
+                }
             });
     }, []);
 
@@ -59,6 +89,10 @@ export default function LessionInput() {
         }
     }, [requestedClass]);
 
+    useEffect(() => {
+        console.log("teacherData", teacherData);
+    }, [teacherData]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -73,7 +107,7 @@ export default function LessionInput() {
             console.log("end:" + lessonEndTime);
             const lessonData = {
                 classId,
-                teacherId: "65f35c82a3625a11fa36b61e",
+                teacherId: teacherData.id,
                 title,
                 start_time: new Date(lessonStartTime).toISOString(),
                 end_time: new Date(lessonEndTime).toISOString(),
@@ -94,9 +128,13 @@ export default function LessionInput() {
                         const createdLessonId = response.data.id;
                         toast({
                             title: "Lektion erstellt",
-                            description: "Die Lektion wurde erfolgreich erstellt.",
+                            description:
+                                "Die Lektion wurde erfolgreich erstellt.",
                             variant: "success",
-                        })
+                        });
+                        if (!files) {
+                            router.push(`/calendar`);
+                        }
 
                         if (!createdLessonId) {
                             console.error(
@@ -105,8 +143,6 @@ export default function LessionInput() {
                             return;
                         }
 
-                        lessonStartTime.setDate(lessonStartTime.getDate() + 7);
-                        lessonEndTime.setDate(lessonEndTime.getDate() + 7);
 
                         if (files) {
                             for (let i = 0; i < files.length; i++) {
@@ -128,6 +164,7 @@ export default function LessionInput() {
                                     })
                                     .then((response) => {
                                         console.log(response);
+                                        router.push(`/calendar`);
                                     })
                                     .catch((error) => {
                                         console.log(error);
@@ -135,17 +172,21 @@ export default function LessionInput() {
                             }
                         }
                     })
-                .catch((error) => {
-                    toast({
-                        title: "Fehler beim Erstellen der Lektion",
-                        description: "Fehler: " + error.response.data.message,
-                        variant: "destructive",
-                    })
-                    console.log(error)
-                })
+                    .catch((error) => {
+                        toast({
+                            title: "Fehler beim Erstellen der Lektion",
+                            description:
+                                "Fehler: " + error.response.data.message,
+                            variant: "destructive",
+                        });
+                        console.log(error);
+                    });
             } catch (error) {
                 console.log(error);
             }
+            lessonStartTime.setDate(lessonStartTime.getDate() + 7);
+            lessonEndTime.setDate(lessonEndTime.getDate() + 7);
+
         }
     };
 
@@ -175,10 +216,8 @@ export default function LessionInput() {
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">
                         <div className="flex justify-center items-center">
-                            <ArrowLeftRectangle />
-                            <h1 className="title">
-                                Lektion erfassen
-                            </h1>
+                            <BackToCalendar />
+                            <h1 className="title">Lektion erfassen</h1>
                         </div>
 
                         <div
@@ -308,10 +347,7 @@ export default function LessionInput() {
                                             )
                                         }
                                     />
-                                    <label
-                                        htmlFor="end"
-                                        className="text-black"
-                                    >
+                                    <label htmlFor="end" className="text-black">
                                         Bis:
                                     </label>
                                     <input
@@ -419,7 +455,7 @@ export default function LessionInput() {
                                         type="submit"
                                         value="Lektion erfassen"
                                         onClick={handleSubmit}
-                                            /*(e) =>{ 
+                                        /*(e) =>{ 
                                             var allInputs = document.querySelectorAll('input:not([type=submit])');
                                             var allTeaxtareas = document.querySelectorAll('textarea');
                                             allInputs.forEach(singleInput => singleInput.value = '');}}*/

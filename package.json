@@ -36,6 +36,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
+    "react-simple-typewriter": "^5.0.1",
     "react-spinners": "^0.13.8",
     "read-excel-file": "^5.7.1",
     "tailwind-merge": "^2.2.2",

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import BackToCalendar from '@/components/BackToCalendar'
 
 export default function Login() {
     const [userType, setUserType] = useState(null);
@@ -15,7 +16,7 @@ export default function Login() {
     const [numberOfClasses, setNumberOfClasses] = useState(0);
     const [classIds, setClassIds] = useState([]);
     const [availableClasses, setAvailableClasses] = useState([]);
-    const [selectedClass, setSelectedClass] = useState(null);
+    const [selectedClass, setSelectedClass] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -46,7 +47,7 @@ export default function Login() {
                         .then((response) => response.data.id)
                 )
             );
-            setClassIds(createdClasses);
+            setClassIds(...createdClasses);
 
             axios
                 .post("/api/teacher/create", {
@@ -73,28 +74,28 @@ export default function Login() {
     }, [classIds]);
 
     return (
-        <main className="flex items-center justify-center min-h-screen">
-            <div className="max-w-md w-full space-y-8">
+        <main className="flex items-center justify-center min-h-screen w-full">
+            <div className="space-y-8">
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
-                    <h2 className="text-center text-3xl font-extrabold text-gray-900">
-                        Registrieren als ...
-                    </h2>
-                    <div className="flex-row justify-center items-center absolute space-y-5">
-                        <button
-                            onClick={() => setUserType("Teacher")}
-                            className="useTeacherBtn"
-                        >
-                            Lehrer
-                        </button>
-                        <button
-                            onClick={() => setUserType("Student")}
-                            className="useStudentBtn"
-                        >
-                            Schüler
-                        </button>
+                        <h2 className="title">
+                            Registrieren als ...
+                        </h2>
+                        <div className="flex-row absolute justify-center items-center space-y-5">
+                            <button
+                                onClick={() => setUserType("Teacher")}
+                                className="useTeacherBtn"
+                            >
+                                Lehrer
+                            </button>
+                            <button
+                                onClick={() => setUserType("Student")}
+                                className="useStudentBtn"
+                            >
+                                Schüler
+                            </button>
+                        </div>
                     </div>
-                </div>
                 ) : (
                     <>
                         <h2 className="text-center text-3xl font-extrabold text-gray-900">
@@ -128,40 +129,63 @@ export default function Login() {
                                             setEmail(e.target.value)
                                         }
                                     />
-                                    <input
-                                        className="registerInputField rounded-b-md"
-                                        type="number"
-                                        placeholder="Anzahl Klassen"
+                                    <select
+                                        placeholder='Klassen auswählen'
+                                        className='registerInputField'
                                         onChange={(e) =>
-                                            setNumberOfClasses(e.target.value)
+                                            setSelectedClass(() => setSelectedClass(Array.from(e.target.selectedOptions, option => option.value)))
                                         }
-
-                                    />
-                                    {numberOfClasses > 0 && (
-                                        <div>
-                                            {Array.from({
-                                                length: numberOfClasses,
-                                            }).map((_, index) => (
-                                                <input
-                                                    key={index}
-                                                    type="text"
-                                                    placeholder={`Klassenname ${
-                                                        index + 1
-                                                    }`}
-                                                    onChange={(e) => {
-                                                        const newClasses = [
-                                                            ...teacherClasses,
-                                                        ];
-                                                        newClasses[index] =
-                                                            e.target.value;
-                                                        setTeacherClasses(
-                                                            newClasses
-                                                        );
-                                                    }}
-                                                />
-                                            ))}
-                                        </div>
+                                        multiple
+                                    >
+                                        <option value="deafult" selected disabled>
+                                            Klasse auswählen
+                                        </option>
+                                        {availableClasses &&
+                                        availableClasses.length > 0 ? (
+                                            availableClasses.map((classItem) => (
+                                                <option
+                                                    key={classItem.id}
+                                                    value={classItem.id}
+                                                >
+                                                    {classItem.name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="Keine Klassen gefunden">
+                                                Keine Klassen gefunden
+                                            </option>
+                                        )}
+                                        <option value={'Eintragen'}> Klasse eintragen </option>
+                                    </select>
+                                    {selectedClass && selectedClass.includes('Eintragen') && (
+                                        <>
+                                            <input
+                                                className="rounded-b-md registerInputField"
+                                                type="number"
+                                                placeholder="Anzahl Klassen"
+                                                onChange={(e) => setNumberOfClasses(e.target.value)}
+                                                min={0}
+                                            />
+                                            {numberOfClasses > 0 && (
+                                                <div>
+                                                    {Array.from({ length: numberOfClasses }).map((_, index) => (
+                                                        <input
+                                                            key={index}
+                                                            type="text"
+                                                            placeholder={`Klassenname ${index + 1}`}
+                                                            className="rounded-md registerInputField"
+                                                            onChange={(e) => {
+                                                                const newClasses = [...teacherClasses];
+                                                                newClasses[index] = e.target.value;
+                                                                setTeacherClasses(newClasses);
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </>
                                     )}
+                                    
                                     {error && (
                                         <div className="text-red-500 text-center mt-2">
                                             {error}
@@ -170,9 +194,9 @@ export default function Login() {
                                     <div className="flex items-center justify-center mt-20">
                                         <button
                                             onClick={handleSubmit}
-                                            className="w-full bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-md text-white flex justify-center items-center font-bold cursor-pointer"
+                                            className="loginRegisterBtn mt-[24px]"
                                         >
-                                            Anmelden
+                                            Registrieren
                                         </button>
                                     </div>
                                 </div>
@@ -183,14 +207,14 @@ export default function Login() {
                                 <input
                                     type="text"
                                     placeholder="Benutzername"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="registerInputField rounded-t-md"
                                     onChange={(e) =>
                                         setUsername(e.target.value)
                                     }
                                 />
                                 <select
                                     placeholder="Klassenname"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="registerInputField rounded-b-md"
                                     onChange={(e) =>
                                         setSelectedClass(e.target.value)
                                     }
@@ -217,9 +241,9 @@ export default function Login() {
                                 <div className="flex items-center justify-center">
                                     <button
                                         onClick={handleSubmit}
-                                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        className="loginRegisterBtn mt-[24px]"
                                     >
-                                        Anmelden
+                                        Registrieren
                                     </button>
                                 </div>
                             </div>

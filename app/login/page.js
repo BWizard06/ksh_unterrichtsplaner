@@ -74,7 +74,7 @@ export default function LoginPage() {
                     </div>
                 ) : (
                     <form className="mt-8 space-y-6">
-                        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+                        <h2 className="title">
                             Anmelden als{" "}
                             {userType === "Teacher" ? "Lehrer" : "Schüler"}
                         </h2>
@@ -83,13 +83,13 @@ export default function LoginPage() {
                                 <input
                                     type="text"
                                     placeholder="Benutzername"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="registerInputField rounded-t-md"
                                     onChange={(e) => setUsername(e.target.value)}
                                 />
                                 <input
                                     type="password"
                                     placeholder="Passwort"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="registerInputField rounded-b-md"
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
                                 <input
                                     type="text"
                                     placeholder="Benutzername"
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    className="registerInputField rounded-md"
                                     onChange={(e) =>
                                         setUsername(e.target.value)
                                     }
@@ -108,7 +108,7 @@ export default function LoginPage() {
                         )}
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="loginRegisterBtn"
                             onClick={handleSubmit}
                         >
                             Anmelden
