@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Typewriter } from 'react-simple-typewriter'
 
 export default function TypewriterEffect () {
-    const [showCursor, ] 
+    const [showCursor, ]
     return (
         <div className='flex items-center justify-center'>
         <Typewriter 
