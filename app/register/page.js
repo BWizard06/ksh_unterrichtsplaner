@@ -72,7 +72,6 @@ export default function Login() {
     useEffect(() => {
         console.log("teacher classes", teacherClasses);
     }, [teacherClasses]);
-    
 
     useEffect(() => {
         console.log("Class Ids", classIds);
@@ -169,7 +168,10 @@ export default function Login() {
                                                 )
                                             )
                                         ) : (
-                                            <option value="Keine Klassen gefunden">
+                                            <option
+                                                value="Keine Klassen gefunden"
+                                                disabled
+                                            >
                                                 Keine Klassen gefunden
                                             </option>
                                         )}

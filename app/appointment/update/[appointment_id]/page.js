@@ -47,8 +47,16 @@ export default function ApppointmentUpdate() {
                             })
                             .then((response) => {
                                 setTitle(response.data.title);
-                                setStartTime(formatDateToInputValue(response.data.start_time));
-                                setEndTime(formatDateToInputValue(response.data.end_time));
+                                setStartTime(
+                                    formatDateToInputValue(
+                                        response.data.start_time
+                                    )
+                                );
+                                setEndTime(
+                                    formatDateToInputValue(
+                                        response.data.end_time
+                                    )
+                                );
                                 setLocation(response.data.location);
                                 setNotes(response.data.notes);
                                 setIsLoading(false);
@@ -73,22 +81,30 @@ export default function ApppointmentUpdate() {
     const formatDateToInputValue = (dateStr) => {
         const date = new Date(dateStr);
         const year = date.getFullYear();
-        const month = (date.getMonth() + 1);
+        const month = date.getMonth() + 1;
         const day = date.getDate();
         const hours = date.getHours() - 2;
         const minutes = date.getMinutes();
-    
+
         const formattedYear = year.toString();
-        const formattedMonth = (month < 10 ? '0' : '') + month;
-        const formattedDay = (day < 10 ? '0' : '') + day;
-        const formattedHours = (hours < 10 ? '0' : '') + hours;
-        const formattedMinutes = (minutes < 10 ? '0' : '') + minutes;
-    
+        const formattedMonth = (month < 10 ? "0" : "") + month;
+        const formattedDay = (day < 10 ? "0" : "") + day;
+        const formattedHours = (hours < 10 ? "0" : "") + hours;
+        const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
+
         return `${formattedYear}-${formattedMonth}-${formattedDay}T${formattedHours}:${formattedMinutes}`;
     };
 
-    useEffect(()=>{console.log('Starttime'+startTime)}, [startTime])
-    
+    const formatDateToInputValue2 = (dateStr) => {
+        // Wandeln Sie das Datum in ein für den datetime-local input akzeptables Format um
+        const date = new Date(dateStr);
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset()); // Korrektur der Zeitzone
+        return date.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm Format
+    };
+
+    useEffect(() => {
+        console.log("Starttime" + startTime);
+    }, [startTime]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -97,18 +113,23 @@ export default function ApppointmentUpdate() {
                 id: appointment_id,
                 teacherId: token.id,
                 title: title,
-                start_time: startTime +'Z',
-                end_time: endTime +'Z',
+                start_time: startTime + ":00.000Z",
+                end_time: endTime + ":00.000Z",
                 location: location,
                 notes: notes,
             })
             .then((response) => {
-                router.push("/calendar");
+                router.back();
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+
+    useEffect(() => {
+        console.log("startTime", startTime);
+        console.log("endTime", endTime);
+    }, [startTime, endTime]);
 
     const dateSplitToIso = (date, time) => {
         const [year, month, day] = date.split("-");
@@ -166,12 +187,7 @@ export default function ApppointmentUpdate() {
                                         value={startTime}
                                         step={900}
                                         onChange={(e) =>
-                                            setStartTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split("T")[0],
-                                                    e.target.value.split("T")[1]
-                                                )
-                                            )
+                                            setStartTime(e.target.value)
                                         }
                                     />
                                     <label htmlFor="end" className="text-black">
@@ -186,12 +202,7 @@ export default function ApppointmentUpdate() {
                                         step={900}
                                         value={endTime}
                                         onChange={(e) =>
-                                            (setEndTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split("T")[0],
-                                                    e.target.value.split("T")[1]
-                                                )
-                                            ))
+                                            setEndTime(e.target.value)
                                         }
                                     />
                                 </div>
@@ -201,7 +212,9 @@ export default function ApppointmentUpdate() {
                                         type="text"
                                         id="location"
                                         name="location"
-                                        value={location === null ? ""
+                                        value={
+                                            location === null
+                                                ? ""
                                                 : `${location}`
                                         }
                                         placeholder={
@@ -218,7 +231,9 @@ export default function ApppointmentUpdate() {
                                         id="notes"
                                         name="notes"
                                         value={notes === null ? "" : `${notes}`}
-                                        placeholder={notes === null ? "Ihre Notizen" : ""}
+                                        placeholder={
+                                            notes === null ? "Ihre Notizen" : ""
+                                        }
                                         onChange={(event) =>
                                             setNotes(event.target.value)
                                         }

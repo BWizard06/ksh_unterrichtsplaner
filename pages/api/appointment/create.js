@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         try {
             const { teacherId, title, start_time, end_time, notes, location, imported } = req.body;
 
-            if (!teacherId || !title || !start_time || !end_time || !imported) {
+            if (!teacherId || !title || !start_time || !end_time || imported === undefined) {
                 return res
                     .status(400)
                     .json({ message: "Alle Felder müssen ausgefüllt sein." });

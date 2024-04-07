@@ -48,6 +48,7 @@ export default function appointmentInput() {
                     description: "Der Termin wurde erfolgreich erstellt.",
                     variant: "success",
                     duration: 5000,
+                    isClosable: true,
                 });
             })
             .catch((error) => {
@@ -57,6 +58,7 @@ export default function appointmentInput() {
                     description: "Fehler: " + error.response.data.message,
                     variant: "destructive",
                     duration: 5000,
+                    isClosable: true,
                 });
             });
     };
