@@ -201,9 +201,7 @@ export default function ApppointmentUpdate() {
                                         type="text"
                                         id="location"
                                         name="location"
-                                        value={
-                                            location === null
-                                                ? ""
+                                        value={location === null ? ""
                                                 : `${location}`
                                         }
                                         placeholder={
@@ -220,9 +218,7 @@ export default function ApppointmentUpdate() {
                                         id="notes"
                                         name="notes"
                                         value={notes === null ? "" : `${notes}`}
-                                        placeholder={
-                                            notes === null ? "Ihre Notizen" : ""
-                                        }
+                                        placeholder={notes === null ? "Ihre Notizen" : ""}
                                         onChange={(event) =>
                                             setNotes(event.target.value)
                                         }

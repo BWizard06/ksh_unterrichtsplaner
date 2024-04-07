@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PulseLoader from "react-spinners/PulseLoader";
+import "@/app/globals.css";
 
 export default function Calendar() {
     const [teacherData, setTeacherData] = useState();
@@ -170,6 +171,7 @@ export default function Calendar() {
                         locale={dE}
                         weekNumbers={true}
                         weekNumberCalculation={"ISO"}
+                        slotEventOverlap={false}
                         firstDay={1}
                         eventClick={(info) => {
                             info.event.extendedProps.type == "lesson"
@@ -178,6 +180,8 @@ export default function Calendar() {
                         }}
                         stickyHeaderDates={true}
                         aspectRatio={2}
+                        eventMaxStack={2}
+                        eventOrder={"title"}
                         events={[
                             ...lessons.map((lesson) => ({
                                 id: lesson.id,
@@ -192,14 +196,17 @@ export default function Calendar() {
                                 title: appointment.title,
                                 start: appointment.start_time,
                                 end: appointment.end_time,
-                                color: "#3c3ffa",
+                                color: appointment.imported ? "#88dff7": "#3c3ffa",
                                 type: "appointment",
+                                textColor: appointment.imported ? "#000000" : "#ffffff",
+                                
                             })),
                             {
                                 daysOfWeek: [0, 6],
                                 display: "background",
                                 color: "#30cb00",
                                 allDay: true,
+                                className: 'wochenende'
                             },
                             {
                                 daysOfWeek: [5],
@@ -208,6 +215,7 @@ export default function Calendar() {
                                 endTime: "17:00",
                                 title: "Nachprüfung",
                                 allDay: false,
+                                className: 'nachpruefung'
                             },
                         ]}
                         allDaySlot={false}

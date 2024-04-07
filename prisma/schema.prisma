@@ -91,6 +91,7 @@ model Appointment {
   title     String
   start_time DateTime @default(now()) @db.Timestamp()
   end_time   DateTime @default(now()) @db.Timestamp()
+  imported Boolean
   notes     String?
   location  String?
   teacher   Teacher  @relation(fields: [teacherId], references: [id])

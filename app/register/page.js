@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import BackBtn from '@/components/BackBtn'
+import BackBtn from "@/components/BackBtn";
 
 export default function Login() {
     const [userType, setUserType] = useState(null);
@@ -16,6 +16,7 @@ export default function Login() {
     const [numberOfClasses, setNumberOfClasses] = useState(0);
     const [classIds, setClassIds] = useState([]);
     const [availableClasses, setAvailableClasses] = useState([]);
+    const [isEintragenChecked, setIsEintragenChecked] = useState(false);
     const [selectedClass, setSelectedClass] = useState([]);
     const router = useRouter();
 
@@ -35,9 +36,9 @@ export default function Login() {
                     username,
                 })
                 .then((response) => {
-                    const {token} = response.data;
+                    const { token } = response.data;
                     localStorage.setItem("token", token);
-                    router.push('/calendar')
+                    router.push("/calendar");
                 });
         } else {
             const createdClasses = await Promise.all(
@@ -47,27 +48,31 @@ export default function Login() {
                         .then((response) => response.data.id)
                 )
             );
-            setClassIds([...selectedClass, ...createdClasses])
+            const allClassIds = [...createdClasses, ...selectedClass];
 
             axios
                 .post("/api/teacher/create", {
                     username,
                     password,
                     email,
-                    classIds: classIds,
+                    classIds: allClassIds,
                 })
                 .then((response) => {
                     const { token } = response.data;
                     const { username } = jwt.decode(token);
                     localStorage.setItem("token", token);
                     localStorage.setItem("username", username);
-                    router.push('/calendar');
+                    router.push("/calendar");
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
     };
+    useEffect(() => {
+        console.log("teacher classes", teacherClasses);
+    }, [teacherClasses]);
+    
 
     useEffect(() => {
         console.log("Class Ids", classIds);
@@ -76,12 +81,10 @@ export default function Login() {
     return (
         <main className="flex items-center justify-center min-h-screen w-full">
             <div className="space-y-8">
-                <BackBtn destination='' />
+                <BackBtn destination="" />
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
-                        <h2 className="title">
-                            Registrieren als ...
-                        </h2>
+                        <h2 className="title">Registrieren als ...</h2>
                         <div className="flex-row absolute justify-center items-center space-y-5">
                             <button
                                 onClick={() => setUserType("Teacher")}
@@ -131,54 +134,93 @@ export default function Login() {
                                         }
                                     />
                                     <select
-                                        placeholder='Klassen auswählen'
-                                        className='registerInputField'
+                                        placeholder="Klassen auswählen"
+                                        className="registerInputField"
                                         onChange={(e) =>
-                                            setSelectedClass(() => setSelectedClass(Array.from(e.target.selectedOptions, option => option.value)))
+                                            setSelectedClass(() =>
+                                                setSelectedClass(
+                                                    Array.from(
+                                                        e.target
+                                                            .selectedOptions,
+                                                        (option) => option.value
+                                                    )
+                                                )
+                                            )
                                         }
                                         multiple
                                     >
-                                        <option value="deafult" selected disabled>
+                                        <option
+                                            value="deafult"
+                                            selected
+                                            disabled
+                                        >
                                             Klasse auswählen
                                         </option>
                                         {availableClasses &&
                                         availableClasses.length > 0 ? (
-                                            availableClasses.map((classItem) => (
-                                                <option
-                                                    key={classItem.id}
-                                                    value={classItem.id}
-                                                >
-                                                    {classItem.name}
-                                                </option>
-                                            ))
+                                            availableClasses.map(
+                                                (classItem) => (
+                                                    <option
+                                                        key={classItem.id}
+                                                        value={classItem.id}
+                                                    >
+                                                        {classItem.name}
+                                                    </option>
+                                                )
+                                            )
                                         ) : (
                                             <option value="Keine Klassen gefunden">
                                                 Keine Klassen gefunden
                                             </option>
                                         )}
-                                        <option value={'Eintragen'}> Klasse eintragen </option>
                                     </select>
-                                    {selectedClass && selectedClass.includes('Eintragen') && (
+                                    <label>Neue Klassen eintragen?</label>
+                                    <input
+                                        id="eintragen"
+                                        type="checkbox"
+                                        onChange={(e) =>
+                                            setIsEintragenChecked(
+                                                e.target.checked
+                                            )
+                                        }
+                                    />
+                                    {isEintragenChecked && (
                                         <>
                                             <input
                                                 className="rounded-b-md registerInputField"
                                                 type="number"
                                                 placeholder="Anzahl Klassen"
-                                                onChange={(e) => setNumberOfClasses(e.target.value)}
+                                                onChange={(e) =>
+                                                    setNumberOfClasses(
+                                                        e.target.value
+                                                    )
+                                                }
                                                 min={0}
                                             />
                                             {numberOfClasses > 0 && (
                                                 <div>
-                                                    {Array.from({ length: numberOfClasses }).map((_, index) => (
+                                                    {Array.from({
+                                                        length: numberOfClasses,
+                                                    }).map((_, index) => (
                                                         <input
                                                             key={index}
                                                             type="text"
-                                                            placeholder={`Klassenname ${index + 1}`}
+                                                            placeholder={`Klassenname ${
+                                                                index + 1
+                                                            }`}
                                                             className="rounded-md registerInputField"
                                                             onChange={(e) => {
-                                                                const newClasses = [...teacherClasses];
-                                                                newClasses[index] = e.target.value;
-                                                                setTeacherClasses(newClasses);
+                                                                const newClasses =
+                                                                    [
+                                                                        ...teacherClasses,
+                                                                    ];
+                                                                newClasses[
+                                                                    index
+                                                                ] =
+                                                                    e.target.value;
+                                                                setTeacherClasses(
+                                                                    newClasses
+                                                                );
                                                             }}
                                                         />
                                                     ))}
@@ -186,7 +228,7 @@ export default function Login() {
                                             )}
                                         </>
                                     )}
-                                    
+
                                     {error && (
                                         <div className="text-red-500 text-center mt-2">
                                             {error}

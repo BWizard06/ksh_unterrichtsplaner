@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         if (!username || !password || !email || !classIds) {
             return res
                 .status(400)
-                .json({ error: "UserId und ClassIds sind erforderlich." });
+                .json({ error: "Alle Felder müssen ausgefüllt sein" });
         }
 
         const saltRounds = 10;
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
 
                 const classTeacher = await prisma.ClassTeacher.createMany({
                     data: classIds.map((classId) => ({
-                        teacherId: teacher.id,
+                        teacherId: teacherId,
                         classId,
                     })),
                 });

@@ -5,9 +5,9 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
-            const { teacherId, title, start_time, end_time, notes, location } = req.body;
+            const { teacherId, title, start_time, end_time, notes, location, imported } = req.body;
 
-            if (!teacherId || !title || !start_time || !end_time) {
+            if (!teacherId || !title || !start_time || !end_time || !imported) {
                 return res
                     .status(400)
                     .json({ message: "Alle Felder müssen ausgefüllt sein." });
@@ -33,6 +33,7 @@ export default async function handler(req, res) {
                     end_time: end_time,
                     notes,
                     location,
+                    imported
                 },
             });
 

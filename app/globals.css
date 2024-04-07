@@ -98,6 +98,18 @@ body{
 
 }
 
+.fc-event{
+  @apply cursor-pointer;
+}
+
+.nachpruefung {
+  @apply cursor-default;
+}
+
+.wochenende{
+  @apply cursor-default;
+}
+
 .fc-header-toolbar {
   @apply pl-5 pr-5;
 }

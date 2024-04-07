@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
-import ExcelReader from "@/components/ExcelReader";
+import { ExcelReader } from "@/lib/excelreader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { PulseLoader } from "react-spinners";
@@ -19,8 +19,10 @@ export default function appointmentInput() {
     const { toast } = useToast();
     const [teacherData, setTeacherData] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [excelFile, setExcelFile] = useState();
     const [token, setToken] = useState();
     const [role, setRole] = useState();
+    const [excelData, setExcelData] = useState();
     const router = useRouter();
 
     const handleSubmit = (event) => {
@@ -37,6 +39,7 @@ export default function appointmentInput() {
                 end_time: utc2Local(appointmentEndTime),
                 notes: notes,
                 location: location,
+                imported: false,
             })
             .then((response) => {
                 console.log(response);
@@ -58,13 +61,52 @@ export default function appointmentInput() {
             });
     };
 
-    useEffect(()=>{
-        console.log('Starttime'+startTime)
-    }, [startTime])
+    async function handleExcelSubmit(e) {
+        e.preventDefault();
+        if (!excelFile) {
+            toast({
+                title: "Keine Datei ausgewählt",
+                description: "Bitte wähle zuerst eine Excel-Datei aus.",
+                variant: "warning",
+                duration: 5000,
+            });
+            return;
+        }
 
-    function handleFileChange(e) {
-        setFile(e.target.files[0]);
+        try {
+            const appointments = await ExcelReader(excelFile);
+            for (const appointment of appointments) {
+                await axios
+                    .post("/api/appointment/create", {
+                        teacherId: teacherData.id,
+                        imported: true,
+                        ...appointment,
+                    })
+                    .then((response) => {
+                        console.log(response);
+                    });
+            }
+            toast({
+                title: "Termine erstellt",
+                description:
+                    "Alle Termine wurden erfolgreich aus der Excel-Datei erstellt.",
+                variant: "success",
+                duration: 5000,
+            });
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "Fehler beim Einlesen der Excel-Datei",
+                description: error.toString(),
+                variant: "error",
+                duration: 5000,
+            });
+        }
     }
+
+    useEffect(() => {
+        console.log("Starttime" + startTime);
+    }, [startTime]);
 
     const dateSplitToIso = (date, time) => {
         const [year, month, day] = date.split("-");
@@ -114,6 +156,11 @@ export default function appointmentInput() {
                 }
             });
     }, []);
+
+    useEffect(() => {
+        console.log(excelData);
+        console.log(excelFile);
+    }, [excelData, excelFile]);
 
     return (
         <main>
@@ -235,21 +282,24 @@ export default function appointmentInput() {
                                 <h2 className="subtitle mt-16 mb-5">
                                     Oder von Excel einlesen lassen
                                 </h2>
-                                <form className="inputForm flex flex-col space-y-3 justify-center items-center">
+                                <form
+                                    onSubmit={handleExcelSubmit}
+                                    className="inputForm flex flex-col space-y-3 justify-center items-center"
+                                >
                                     <input
                                         type="file"
                                         accept=".xlsx"
                                         id="file"
                                         name="file"
                                         required
+                                        onChange={(e) =>
+                                            setExcelFile(e.target.files[0])
+                                        }
                                     />
                                     <input
                                         type="submit"
                                         value="Einlesen"
                                         className="justify-center items-center flex"
-                                        onClick={(e) =>
-                                            ExcelReader(e, handleFileChange(e))
-                                        }
                                     />
                                 </form>
                             </div>
