@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <main className="flex flex-col h-screen space-x-20 items-center justify-center">
             <div className="flex flex-col items-center">
-                <span className='title'><TypewriterEffect wordArray='KSH-Unterrichtsplaner' /></span>
+                <span className='title'><TypewriterEffect wordArray='Unterrichtsplaner' /></span>
 
                 <div className="w-48 mt-20">
                     <div className="relative group cursor-pointer">
