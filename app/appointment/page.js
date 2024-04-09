@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ExcelReader } from "@/lib/excelreader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
-import { PulseLoader } from "react-spinners";
+import Loader from "@/components/Loader";
 import { utc2Local } from "@/lib/utc2local";
 
 export default function appointmentInput() {
@@ -167,13 +167,7 @@ export default function appointmentInput() {
     return (
         <main>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen w-screen">
-                    <PulseLoader
-                        color={"#3c3ffa"}
-                        loading={isLoading}
-                        size={30}
-                    />
-                </div>
+                <Loader isLoading={isLoading} />
             ) : (
                 <div className="flex items-center justify-center text-center min-h-screen w-full">
                     <div className="space-y-2">

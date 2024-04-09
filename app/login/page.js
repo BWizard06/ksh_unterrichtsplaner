@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BackBtn from "@/components/BackBtn";
+import Loader from "@/components/Loader";
 
 export default function LoginPage() {
     const [userType, setUserType] = useState(null);
@@ -12,6 +13,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [availableClasses, setAvailableClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter()
 
     useEffect(() => {
@@ -52,6 +54,10 @@ export default function LoginPage() {
 
     return (
         <main className="flex items-center justify-center min-h-screen">
+            {/*{isLoading ? (
+                <Loader isLoading={isLoading}/>
+            ) :
+            (*/}
             <div className="max-w-md w-full space-y-8">
                 <BackBtn destination=''/>
                 {!userType ? (
@@ -120,6 +126,7 @@ export default function LoginPage() {
                     </form>
                 )}
             </div>
+            {/*)}*/}
         </main>
     );
 }

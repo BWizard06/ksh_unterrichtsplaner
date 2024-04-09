@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "@/components/Loader";
 import { useToast } from "@/components/ui/use-toast";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
@@ -217,13 +217,7 @@ export default function LessionInput() {
     return (
         <main>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen w-screen">
-                    <PulseLoader
-                        color={"#3c3ffa"}
-                        loading={isLoading}
-                        size={30}
-                    />
-                </div>
+                <Loader isLoading={isLoading} />    
             ) : (
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">

@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
@@ -102,13 +102,7 @@ export default function AppointmentDetail() {
     return (
         <main className="flex flex-col items-center justify-between">
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen w-screen">
-                    <PulseLoader
-                        color={"#3c3ffa"}
-                        loading={isLoading}
-                        size={30}
-                    />
-                </div>
+                <Loader isLoading={isLoading} />
             ) : (
                 <div className="flex flex-col items-center justify-center text-center min-h-screen">
                     <div className="w-full space-x-2">

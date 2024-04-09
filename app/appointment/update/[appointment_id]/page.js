@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { utc2Local } from "@/lib/utc2local";
@@ -140,16 +140,10 @@ export default function ApppointmentUpdate() {
         <main>
             <div className="flex items-center justify-center text-center min-h-screen w-full">
                 {isLoading ? (
-                    <div className="flex justify-center items-center h-screen w-screen">
-                        <PulseLoader
-                            color={"#3c3ffa"}
-                            loading={isLoading}
-                            size={30}
-                        />
-                    </div>
+                    <Loader isLoading={isLoading} />
                 ) : (
                     <div className="space-y-2">
-                        <BackBtn destination="calendar" />
+                        <BackBtn />
                         <h1 className="title">Termin bearbeiten</h1>
 
                         <div

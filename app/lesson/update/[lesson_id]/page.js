@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import axios from "axios";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -185,20 +185,13 @@ export default function LessonUpdate() {
 
     return (
         <main className="flex items-center justify-center text-center min-h-screen w-full">
-            <BackBtn />
             {isLoading ? (
-                <div className="flex justify-center">
-                    <PulseLoader
-                        color={"#3c3ffa"}
-                        loading={isLoading}
-                        size={30}
-                    />
-                </div>
+                <Loader isLoading={isLoading} />
             ) : (
                 <div className="flex items-center justify-center text-center min-h-screen">
                     <div className="w-full space-y-2">
                         <div className="flex justify-center items-center">
-                            <BackBtn destination="calendar" />
+                            <BackBtn />
                             <h1 className="title">
                                 Lektion {title} bearbeiten
                             </h1>

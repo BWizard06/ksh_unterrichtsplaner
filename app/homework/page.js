@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 
 export default function Homework() {
@@ -93,13 +93,7 @@ export default function Homework() {
     return (
         <main className="flex flex-col items-center justify-center min-h-screen">
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen w-screen">
-                    <PulseLoader
-                        color={"#3c3ffa"}
-                        loading={isLoading}
-                        size={30}
-                    />
-                </div>
+                <Loader isLoading={isLoading} />
             ) : (
                 <div className="w-full max-w-4xl p-5">
                     <h1 className="title text-center mb-10">

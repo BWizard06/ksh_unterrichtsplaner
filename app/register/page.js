@@ -18,6 +18,7 @@ export default function Login() {
     const [availableClasses, setAvailableClasses] = useState([]);
     const [isEintragenChecked, setIsEintragenChecked] = useState(false);
     const [selectedClass, setSelectedClass] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
@@ -79,35 +80,183 @@ export default function Login() {
 
     return (
         <main className="flex items-center justify-center min-h-screen w-full">
-            <div className="space-y-8">
-                <BackBtn destination="" />
-                {!userType ? (
-                    <div className="space-y-16 flex justify-center">
-                        <h2 className="title">Registrieren als ...</h2>
-                        <div className="flex-row absolute justify-center items-center space-y-5">
-                            <button
-                                onClick={() => setUserType("Teacher")}
-                                className="useTeacherBtn"
-                            >
-                                Lehrer
-                            </button>
-                            <button
-                                onClick={() => setUserType("Student")}
-                                className="useStudentBtn"
-                            >
-                                Schüler
-                            </button>
+            {/*{isLoading ? (
+                <Loader isLoading={isLoading} />
+            )
+        :(*/}
+                <div className="space-y-8">
+                    <BackBtn destination="" />
+                    {!userType ? (
+                        <div className="space-y-16 flex justify-center">
+                            <h2 className="title">Registrieren als ...</h2>
+                            <div className="flex-row absolute justify-center items-center space-y-5">
+                                <button
+                                    onClick={() => setUserType("Teacher")}
+                                    className="useTeacherBtn"
+                                >
+                                    Lehrer
+                                </button>
+                                <button
+                                    onClick={() => setUserType("Student")}
+                                    className="useStudentBtn"
+                                >
+                                    Schüler
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ) : (
-                    <>
-                        <h2 className="text-center text-3xl font-extrabold text-gray-900">
-                            Registrieren als{" "}
-                            {userType === "Teacher" ? "Lehrer" : "Schüler"}
-                        </h2>
-                        {userType === "Teacher" && (
-                            <div>
-                                <div className="rounded-md -space-y-px">
+                    ) : (
+                        <>
+                            <h2 className="text-center text-3xl font-extrabold text-gray-900">
+                                Registrieren als{" "}
+                                {userType === "Teacher" ? "Lehrer" : "Schüler"}
+                            </h2>
+                            {userType === "Teacher" && (
+                                <div>
+                                    <div className="rounded-md -space-y-px">
+                                        <input
+                                            type="text"
+                                            placeholder="Benutzername"
+                                            className="registerInputField rounded-t-md"
+                                            onChange={(e) =>
+                                                setUsername(e.target.value)
+                                            }
+                                        />
+                                        <input
+                                            type="password"
+                                            placeholder="Passwort"
+                                            className="registerInputField"
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            className="registerInputField"
+                                            onChange={(e) =>
+                                                setEmail(e.target.value)
+                                            }
+                                        />
+                                        <select
+                                            placeholder="Klassen auswählen"
+                                            className="registerInputField"
+                                            onChange={(e) =>
+                                                setSelectedClass(() =>
+                                                    setSelectedClass(
+                                                        Array.from(
+                                                            e.target
+                                                                .selectedOptions,
+                                                            (option) => option.value
+                                                        )
+                                                    )
+                                                )
+                                            }
+                                            multiple
+                                        >
+                                            <option
+                                                value="deafult"
+                                                selected
+                                                disabled
+                                            >
+                                                Klasse auswählen
+                                            </option>
+                                            {availableClasses &&
+                                            availableClasses.length > 0 ? (
+                                                availableClasses.map(
+                                                    (classItem) => (
+                                                        <option
+                                                            key={classItem.id}
+                                                            value={classItem.id}
+                                                        >
+                                                            {classItem.name}
+                                                        </option>
+                                                    )
+                                                )
+                                            ) : (
+                                                <option
+                                                    value="Keine Klassen gefunden"
+                                                    disabled
+                                                >
+                                                    Keine Klassen gefunden
+                                                </option>
+                                            )}
+                                        </select>
+                                        <div className="space-x-4 items-center flex justify-center">
+                                            <label>Neue Klassen eintragen?</label>
+                                            <input
+                                                id="eintragen"
+                                                type="checkbox"
+                                                className="cursor-pointer pt-10"
+                                                onChange={(e) =>
+                                                    setIsEintragenChecked(
+                                                        e.target.checked
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                        {isEintragenChecked && (
+                                            <>
+                                                <input
+                                                    className="rounded-b-md registerInputField"
+                                                    type="number"
+                                                    placeholder="Anzahl Klassen"
+                                                    onChange={(e) =>
+                                                        setNumberOfClasses(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    min={0}
+                                                />
+                                                {numberOfClasses > 0 && (
+                                                    <div>
+                                                        {Array.from({
+                                                            length: numberOfClasses,
+                                                        }).map((_, index) => (
+                                                            <input
+                                                                key={index}
+                                                                type="text"
+                                                                placeholder={`Klassenname ${
+                                                                    index + 1
+                                                                }`}
+                                                                className="rounded-md registerInputField"
+                                                                onChange={(e) => {
+                                                                    const newClasses =
+                                                                        [
+                                                                            ...teacherClasses,
+                                                                        ];
+                                                                    newClasses[
+                                                                        index
+                                                                    ] =
+                                                                        e.target.value;
+                                                                    setTeacherClasses(
+                                                                        newClasses
+                                                                    );
+                                                                }}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
+
+                                        {error && (
+                                            <div className="text-red-500 text-center mt-2">
+                                                {error}
+                                            </div>
+                                        )}
+                                        <div className="flex items-center justify-center mt-20">
+                                            <button
+                                                onClick={handleSubmit}
+                                                className="loginRegisterBtn mt-[24px]"
+                                            >
+                                                Registrieren
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {userType === "Student" && (
+                                <div>
                                     <input
                                         type="text"
                                         placeholder="Benutzername"
@@ -116,127 +265,33 @@ export default function Login() {
                                             setUsername(e.target.value)
                                         }
                                     />
-                                    <input
-                                        type="password"
-                                        placeholder="Passwort"
-                                        className="registerInputField"
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                    />
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="registerInputField"
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
-                                    />
                                     <select
-                                        placeholder="Klassen auswählen"
-                                        className="registerInputField"
+                                        placeholder="Klassenname"
+                                        className="registerInputField rounded-b-md"
                                         onChange={(e) =>
-                                            setSelectedClass(() =>
-                                                setSelectedClass(
-                                                    Array.from(
-                                                        e.target
-                                                            .selectedOptions,
-                                                        (option) => option.value
-                                                    )
-                                                )
-                                            )
+                                            setSelectedClass(e.target.value)
                                         }
-                                        multiple
                                     >
-                                        <option
-                                            value="deafult"
-                                            selected
-                                            disabled
-                                        >
+                                        <option value="deafult" selected disabled>
                                             Klasse auswählen
                                         </option>
                                         {availableClasses &&
                                         availableClasses.length > 0 ? (
-                                            availableClasses.map(
-                                                (classItem) => (
-                                                    <option
-                                                        key={classItem.id}
-                                                        value={classItem.id}
-                                                    >
-                                                        {classItem.name}
-                                                    </option>
-                                                )
-                                            )
+                                            availableClasses.map((classItem) => (
+                                                <option
+                                                    key={classItem.id}
+                                                    value={classItem.id}
+                                                >
+                                                    {classItem.name}
+                                                </option>
+                                            ))
                                         ) : (
-                                            <option
-                                                value="Keine Klassen gefunden"
-                                                disabled
-                                            >
+                                            <option value="Keine Klassen gefunden">
                                                 Keine Klassen gefunden
                                             </option>
                                         )}
                                     </select>
-                                    <label>Neue Klassen eintragen?</label>
-                                    <input
-                                        id="eintragen"
-                                        type="checkbox"
-                                        onChange={(e) =>
-                                            setIsEintragenChecked(
-                                                e.target.checked
-                                            )
-                                        }
-                                    />
-                                    {isEintragenChecked && (
-                                        <>
-                                            <input
-                                                className="rounded-b-md registerInputField"
-                                                type="number"
-                                                placeholder="Anzahl Klassen"
-                                                onChange={(e) =>
-                                                    setNumberOfClasses(
-                                                        e.target.value
-                                                    )
-                                                }
-                                                min={0}
-                                            />
-                                            {numberOfClasses > 0 && (
-                                                <div>
-                                                    {Array.from({
-                                                        length: numberOfClasses,
-                                                    }).map((_, index) => (
-                                                        <input
-                                                            key={index}
-                                                            type="text"
-                                                            placeholder={`Klassenname ${
-                                                                index + 1
-                                                            }`}
-                                                            className="rounded-md registerInputField"
-                                                            onChange={(e) => {
-                                                                const newClasses =
-                                                                    [
-                                                                        ...teacherClasses,
-                                                                    ];
-                                                                newClasses[
-                                                                    index
-                                                                ] =
-                                                                    e.target.value;
-                                                                setTeacherClasses(
-                                                                    newClasses
-                                                                );
-                                                            }}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </>
-                                    )}
-
-                                    {error && (
-                                        <div className="text-red-500 text-center mt-2">
-                                            {error}
-                                        </div>
-                                    )}
-                                    <div className="flex items-center justify-center mt-20">
+                                    <div className="flex items-center justify-center">
                                         <button
                                             onClick={handleSubmit}
                                             className="loginRegisterBtn mt-[24px]"
@@ -245,57 +300,11 @@ export default function Login() {
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        )}
-                        {userType === "Student" && (
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Benutzername"
-                                    className="registerInputField rounded-t-md"
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
-                                />
-                                <select
-                                    placeholder="Klassenname"
-                                    className="registerInputField rounded-b-md"
-                                    onChange={(e) =>
-                                        setSelectedClass(e.target.value)
-                                    }
-                                >
-                                    <option value="deafult" selected disabled>
-                                        Klasse auswählen
-                                    </option>
-                                    {availableClasses &&
-                                    availableClasses.length > 0 ? (
-                                        availableClasses.map((classItem) => (
-                                            <option
-                                                key={classItem.id}
-                                                value={classItem.id}
-                                            >
-                                                {classItem.name}
-                                            </option>
-                                        ))
-                                    ) : (
-                                        <option value="Keine Klassen gefunden">
-                                            Keine Klassen gefunden
-                                        </option>
-                                    )}
-                                </select>
-                                <div className="flex items-center justify-center">
-                                    <button
-                                        onClick={handleSubmit}
-                                        className="loginRegisterBtn mt-[24px]"
-                                    >
-                                        Registrieren
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </>
-                )}
-            </div>
+                            )}
+                        </>
+                    )}
+                </div>
+            {/*)}*/}
         </main>
     );
 }
