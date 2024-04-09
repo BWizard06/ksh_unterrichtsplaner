@@ -36,7 +36,7 @@ export default function LessionInput() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
             return;
         }
 

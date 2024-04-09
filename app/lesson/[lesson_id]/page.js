@@ -84,7 +84,7 @@ export default function LessonDetail() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
             return;
         }
 
@@ -98,7 +98,7 @@ export default function LessonDetail() {
             })
             .catch((error) => {
                 if (error.response && error.response.status === 401) {
-                    router.push("/login");
+                    router.push("/");
                 } else {
                     console.error("Fehler beim Überprüfen des Tokens:", error);
                 }

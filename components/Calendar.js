@@ -77,12 +77,12 @@ export default function Calendar() {
                             });
                     }
                 } else {
-                    router.push("/login");
+                    router.push("/");
                 }
             })
             .catch((error) => {
                 if (error.response && error.response.status === 401) {
-                    router.push("/login");
+                    router.push("/");
                 } else {
                     console.error("Fehler beim Überprüfen des Tokens:", error);
                 }

@@ -25,7 +25,7 @@ export default function ApppointmentUpdate() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
         }
 
         axios
@@ -93,13 +93,6 @@ export default function ApppointmentUpdate() {
         const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
 
         return `${formattedYear}-${formattedMonth}-${formattedDay}T${formattedHours}:${formattedMinutes}`;
-    };
-
-    const formatDateToInputValue2 = (dateStr) => {
-        // Wandeln Sie das Datum in ein für den datetime-local input akzeptables Format um
-        const date = new Date(dateStr);
-        date.setMinutes(date.getMinutes() - date.getTimezoneOffset()); // Korrektur der Zeitzone
-        return date.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm Format
     };
 
     useEffect(() => {

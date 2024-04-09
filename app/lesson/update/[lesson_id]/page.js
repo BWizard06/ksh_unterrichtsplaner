@@ -38,7 +38,7 @@ export default function LessonUpdate() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
         }
 
         axios.post("/api/verifyToken", { token }).then((response) => {

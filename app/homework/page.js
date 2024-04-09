@@ -57,12 +57,12 @@ export default function Homework() {
                             });
                     }
                 } else {
-                    router.push("/login");
+                    router.push("/");
                 }
             })
             .catch((error) => {
                 if (error.response && error.response.status === 401) {
-                    router.push("/login");
+                    router.push("/");
                 } else {
                     console.error("Fehler beim Überprüfen des Tokens:", error);
                 }
