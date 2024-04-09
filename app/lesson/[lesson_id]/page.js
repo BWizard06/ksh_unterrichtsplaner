@@ -170,6 +170,10 @@ export default function LessonDetail() {
                             {lesson.class.name}
                         </p>
                         <p className="text-2xl">
+                            <span className="subtitle">Lehrer: </span>
+                            {lesson.teacher.user.username}
+                        </p>
+                        <p className="text-2xl">
                             <span className="subtitle">Lektionstyp: </span>
                             {lesson.lesson_type}
                         </p>

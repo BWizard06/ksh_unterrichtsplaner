@@ -132,7 +132,7 @@ body{
 }
 
 .inputForm input[type="submit"] {
-  @apply bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-black flex justify-center items-center cursor-pointer;
+  @apply bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white font-bold flex justify-center items-center cursor-pointer;
 }
 
 .inputForm input[type="file"] {
@@ -148,7 +148,7 @@ body{
 }
 
 .useTeacherBtn{
-  @apply py-1 px-3 w-36 bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-lg text-black text-2xl font-bold flex justify-center items-center cursor-pointer focus:ring-2 focus:ring-blue-400/50;;
+  @apply py-1 px-3 w-36 bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-lg text-white text-2xl font-bold flex justify-center items-center cursor-pointer focus:ring-2 focus:ring-blue-400/50;;
 }
 
 .useStudentBtn{
@@ -172,7 +172,7 @@ body{
 }
 
 .loginRegisterBtn{
-  @apply w-full bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-md text-black flex justify-center items-center font-bold cursor-pointer
+  @apply p-2 w-auto bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white flex justify-center items-center font-bold cursor-pointer;
 }
 
 .gradientDiv{

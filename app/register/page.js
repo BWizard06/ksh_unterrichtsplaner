@@ -294,7 +294,7 @@ export default function Login() {
                                     <div className="flex items-center justify-center">
                                         <button
                                             onClick={handleSubmit}
-                                            className="loginRegisterBtn mt-[24px]"
+                                            className="bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white font-bold flex justify-center items-center cursor-pointer mt-[24px]"
                                         >
                                             Registrieren
                                         </button>

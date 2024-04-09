@@ -18,7 +18,7 @@ export default function Homework() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
         }
 
         axios

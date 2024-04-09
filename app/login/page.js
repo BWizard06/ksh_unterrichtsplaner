@@ -116,13 +116,15 @@ export default function LoginPage() {
                                 />
                             </div>
                         )}
-                        <button
-                            type="submit"
-                            className="loginRegisterBtn"
-                            onClick={handleSubmit}
-                        >
-                            Anmelden
-                        </button>
+                        <div className="flex justify-center items-center">
+                            <button
+                                type="submit"
+                                className="loginRegisterBtn"
+                                onClick={handleSubmit}
+                            >
+                                Anmelden
+                            </button>
+                        </div>
                     </form>
                 )}
             </div>

@@ -119,7 +119,7 @@ export default function appointmentInput() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            router.push("/login");
+            router.push("/");
             return;
         }
 
@@ -152,7 +152,7 @@ export default function appointmentInput() {
             })
             .catch((error) => {
                 if (error.response && error.response.status === 401) {
-                    router.push("/login");
+                    router.push("/");
                 } else {
                     console.error("Fehler beim Überprüfen des Tokens:", error);
                 }
@@ -295,7 +295,7 @@ export default function appointmentInput() {
                                     <input
                                         type="submit"
                                         value="Einlesen"
-                                        className="justify-center items-center flex"
+                                        className="justify-center items-center flex mt-6"
                                     />
                                 </form>
                             </div>
