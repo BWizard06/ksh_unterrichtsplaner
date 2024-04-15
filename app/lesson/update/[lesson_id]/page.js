@@ -8,6 +8,8 @@ import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { utc2Local } from "@/lib/utc2local";
+import { formatDateToInputValue } from "@/lib/formatDateToInputValue";
+import { dateSplitToIso } from "@/lib/dateSplitToIso";
 
 export default function LessonUpdate() {
     const searchParams = useParams();
@@ -58,12 +60,8 @@ export default function LessonUpdate() {
                         })
                         .then((response) => {
                             setTitle(response.data.title);
-                            setStartTime(
-                                formatDateToInputValue(response.data.start_time)
-                            );
-                            setEndTime(
-                                formatDateToInputValue(response.data.end_time)
-                            );
+                            setStartTime(formatDateToInputValue(response.data.start_time));
+                            setEndTime(formatDateToInputValue(response.data.end_time));
                             setClassId(response.data.classId);
                             setLocation(response.data.location);
                             setHomework(response.data.homework);
@@ -141,11 +139,6 @@ export default function LessonUpdate() {
             });
     };
 
-    const dateSplitToIso = (date, time) => {
-        const [year, month, day] = date.split("-");
-        return `${year}-${month}-${day}T${time}:00`;
-    };
-
     useEffect(() => {
         axios
             .get("/api/class/getById", {
@@ -161,23 +154,6 @@ export default function LessonUpdate() {
                 console.log(error);
             });
     }, [classId]);
-
-    const formatDateToInputValue = (dateStr) => {
-        const date = new Date(dateStr);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const hours = date.getHours() - 2;
-        const minutes = date.getMinutes();
-
-        const formattedYear = year.toString();
-        const formattedMonth = (month < 10 ? "0" : "") + month;
-        const formattedDay = (day < 10 ? "0" : "") + day;
-        const formattedHours = (hours < 10 ? "0" : "") + hours;
-        const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
-
-        return `${formattedYear}-${formattedMonth}-${formattedDay}T${formattedHours}:${formattedMinutes}`;
-    };
 
     useEffect(() => {
         console.log("teachernotes", teacherNotes);
@@ -331,10 +307,7 @@ export default function LessonUpdate() {
                                         value={startTime}
                                         onChange={(e) =>
                                             setStartTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split(
-                                                        "T"
-                                                    )[0],
+                                                dateSplitToIso(e.target.value.split("T")[0],
                                                     e.target.value.split("T")[1]
                                                 )
                                             )
@@ -353,10 +326,7 @@ export default function LessonUpdate() {
                                         value={endTime}
                                         onChange={(e) =>
                                             setEndTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split(
-                                                        "T"
-                                                    )[0],
+                                                dateSplitToIso(e.target.value.split("T")[0],
                                                     e.target.value.split("T")[1]
                                                 )
                                             )

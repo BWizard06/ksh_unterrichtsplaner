@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { utc2Local } from '@/lib/utc2local';
+import { dateSplitToIso } from '@/lib/dateSplitToIso';
 
 export default function LessionInput() {
     const [subject, setSubject] = useState();
@@ -196,12 +197,6 @@ export default function LessionInput() {
         }
     };
 
-    const formatToLocalISOString = (date) => {
-        const offset = date.getTimezoneOffset();
-        const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
-        return adjustedDate.toISOString().slice(0, 19).replace('T', ' ');
-    };
-
     useEffect(() => {
         console.log("lessonId:" + lessonId);
     }, [lessonId]);
@@ -210,10 +205,6 @@ export default function LessionInput() {
         console.log("classId:" + classId);
     }, [classId]);
 
-    const dateSplitToIso = (date, time) => {
-        const [year, month, day] = date.split("-");
-        return `${year}-${month}-${day}T${time}:00`;
-    };
     return (
         <main>
             {isLoading ? (
@@ -347,10 +338,7 @@ export default function LessionInput() {
                                         step={900}
                                         onChange={(e) =>
                                             setStartTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split(
-                                                        "T"
-                                                    )[0],
+                                                dateSplitToIso(e.target.value.split("T")[0],
                                                     e.target.value.split("T")[1]
                                                 )
                                             )
@@ -368,10 +356,7 @@ export default function LessionInput() {
                                         step={900}
                                         onChange={(e) =>
                                             setEndTime(
-                                                dateSplitToIso(
-                                                    e.target.value.split(
-                                                        "T"
-                                                    )[0],
+                                                dateSplitToIso(e.target.value.split("T")[0],
                                                     e.target.value.split("T")[1]
                                                 )
                                             )

@@ -7,6 +7,7 @@ import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
 import { utc2Local } from "@/lib/utc2local";
+import { formatDateToInputValue } from "@/lib/formatDateToInputValue";
 
 export default function ApppointmentUpdate() {
     const searchParams = useParams();
@@ -47,16 +48,8 @@ export default function ApppointmentUpdate() {
                             })
                             .then((response) => {
                                 setTitle(response.data.title);
-                                setStartTime(
-                                    formatDateToInputValue(
-                                        response.data.start_time
-                                    )
-                                );
-                                setEndTime(
-                                    formatDateToInputValue(
-                                        response.data.end_time
-                                    )
-                                );
+                                setStartTime(formatDateToInputValue(response.data.start_time));
+                                setEndTime(formatDateToInputValue(response.data.end_time));
                                 setLocation(response.data.location);
                                 setNotes(response.data.notes);
                                 setIsLoading(false);
@@ -77,23 +70,6 @@ export default function ApppointmentUpdate() {
     useEffect(() => {
         console.log("token", token);
     }, [token]);
-
-    const formatDateToInputValue = (dateStr) => {
-        const date = new Date(dateStr);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const hours = date.getHours() - 2;
-        const minutes = date.getMinutes();
-
-        const formattedYear = year.toString();
-        const formattedMonth = (month < 10 ? "0" : "") + month;
-        const formattedDay = (day < 10 ? "0" : "") + day;
-        const formattedHours = (hours < 10 ? "0" : "") + hours;
-        const formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
-
-        return `${formattedYear}-${formattedMonth}-${formattedDay}T${formattedHours}:${formattedMinutes}`;
-    };
 
     useEffect(() => {
         console.log("Starttime" + startTime);
@@ -123,11 +99,6 @@ export default function ApppointmentUpdate() {
         console.log("startTime", startTime);
         console.log("endTime", endTime);
     }, [startTime, endTime]);
-
-    const dateSplitToIso = (date, time) => {
-        const [year, month, day] = date.split("-");
-        return `${year}-${month}-${day}T${time}:00`;
-    };
 
     return (
         <main>
