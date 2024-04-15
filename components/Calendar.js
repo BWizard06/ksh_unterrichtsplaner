@@ -120,13 +120,13 @@ export default function Calendar() {
                 </div>
             ) : (
                 <div>
-                    <div className="flex flex-col justify-center items-center">
-                        <h1>
+                    <div className="flex items-center justify-normal w-max mb-2">
+                        <LogoutBtn />
+                        <h1 className="subtitle ml-4">
                             {role === "teacher"
                                 ? `Kalender für: ${username}`
                                 : `Kalendar für: ${username}`}
                         </h1>
-                        <LogoutBtn />
                     </div>
                     <FullCalendar
                         plugins={[
@@ -158,13 +158,13 @@ export default function Calendar() {
                         headerToolbar={
                             role === "teacher"
                                 ? {
-                                      start: "terminimport lessoninput title",
-                                      center: "prev today next",
+                                      start: "terminimport lessoninput",
+                                      center: "prev today next title",
                                       end: "dayGridMonth timeGridWeek",
                                   }
                                 : {
-                                      start: "homework title",
-                                      center: "prev today next",
+                                      start: "homework",
+                                      center: "prev today next title",
                                       end: "dayGridMonth timeGridWeek",
                                   }
                         }

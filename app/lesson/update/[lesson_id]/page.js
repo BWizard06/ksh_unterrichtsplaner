@@ -314,7 +314,6 @@ export default function LessonUpdate() {
                                         required
                                         min={"07:00"}
                                         max={"22:00"}
-                                        step={900}
                                         value={startTime}
                                         onChange={(e) =>
                                             setStartTime(
@@ -333,7 +332,7 @@ export default function LessonUpdate() {
                                         required
                                         min={"07:00"}
                                         max={"22:00"}
-                                        step={900}
+                                        
                                         value={endTime}
                                         onChange={(e) =>
                                             setEndTime(
