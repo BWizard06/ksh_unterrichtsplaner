@@ -238,6 +238,7 @@ export default function LessionInput() {
                                         name="title"
                                         placeholder="Titel"
                                         required
+                                        maxLength={45}
                                         className="w-auto"
                                         onChange={(e) =>
                                             setTitle(e.target.value)
@@ -249,6 +250,7 @@ export default function LessionInput() {
                                         name="fach"
                                         placeholder="Fach"
                                         required
+                                        max={35}
                                         className="w-24"
                                         onChange={(e) =>
                                             setSubject(e.target.value)
@@ -296,6 +298,7 @@ export default function LessionInput() {
                                         id="room"
                                         name="room"
                                         placeholder="Zimmer"
+                                        max={15}
                                         required
                                         className="w-24"
                                         onChange={(e) =>

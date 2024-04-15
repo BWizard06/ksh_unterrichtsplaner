@@ -56,10 +56,17 @@ export default function LessonDetail() {
             );
     };
 
-    function shortenString(string) {
+    function shortenFileString(string) {
         let lastDot = string.lastIndexOf(".");
         let StringafterDot = string.substring(lastDot);
         return string.substring(0, 10) + "..." + StringafterDot;
+    }
+
+    function shortenLongTitle(title) {
+        if (title.length > 35) {
+            return title.substring(0, 35) + "...";
+        }
+        return
     }
 
     const isoToString = (isoString) => {
@@ -138,8 +145,7 @@ export default function LessonDetail() {
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
                             <BackBtn destination={"calendar"} />
-                            <h1 className="title">{lesson.title}</h1>
-                            <h2 className="subtitle">{/*{teacher.user}*/}</h2>
+                            <h1 className="title">{shortenLongTitle(lesson.title)}</h1>
                             {role === "teacher" && (
                                 <TrashBinIcon
                                     onClick={() => {
@@ -198,7 +204,7 @@ export default function LessonDetail() {
                                         className="bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white text-sm cursor-pointer px-2 py-1 m-1"
                                         onClick={() => exportFile(file)}
                                     >
-                                        {shortenString(file.file_name)}
+                                        {shortenFileString(file.file_name)}
                                     </button>
                                 ))}
                             </div>
@@ -212,7 +218,7 @@ export default function LessonDetail() {
                                             className="bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white text-sm cursor-pointer px-2 py-1 m-1"
                                             onClick={() => exportFile(file)}
                                         >
-                                            {shortenString(file.file_name)}
+                                            {shortenFileString(file.file_name)}
                                         </button>
                                     ))}
                                 </div>

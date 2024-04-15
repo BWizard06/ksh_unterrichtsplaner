@@ -208,7 +208,7 @@ export default function Login() {
                                                     min={0}
                                                 />
                                                 {numberOfClasses > 0 && (
-                                                    <div>
+                                                    <div className="grid grid-cols-2">
                                                         {Array.from({
                                                             length: numberOfClasses,
                                                         }).map((_, index) => (
@@ -218,7 +218,7 @@ export default function Login() {
                                                                 placeholder={`Klassenname ${
                                                                     index + 1
                                                                 }`}
-                                                                className="rounded-md registerInputField"
+                                                                className="rounded-md w-1/2 registerInputField"
                                                                 onChange={(e) => {
                                                                     const newClasses =
                                                                         [

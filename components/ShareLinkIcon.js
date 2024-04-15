@@ -7,7 +7,7 @@ export default function ShareLinkIcon() {
     
     return (
         <ShareIcon 
-            className='w-10 h-10 hover:cursor-pointer right-80 absolute'
+            className='w-10 h-10 hover:cursor-pointer right-80'
             onClick={() => {
                 let url = navigator.clipboard.writeText(window.location.href)
                 console.log('Link kopiert:' + url)

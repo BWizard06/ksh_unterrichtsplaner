@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PulseLoader from "react-spinners/PulseLoader";
+import LogoutBtn from "./LogoutBtn";
 import "@/app/globals.css";
 
 export default function Calendar() {
@@ -124,6 +125,7 @@ export default function Calendar() {
                             ? `Kalender für: ${username}`
                             : `Kalendar für: ${username}`}
                     </h1>
+                    <LogoutBtn />
                     <FullCalendar
                         plugins={[
                             dayGridPlugin,
