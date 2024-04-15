@@ -99,6 +99,17 @@ export default function LessonUpdate() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        if(endTime <= startTime){
+            toast({
+                title: "Ungültige Zeitangaben",
+                description: "Das Enddatum muss nach dem Startdatum liegen.",
+                variant: "warning",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
         axios
             .put("/api/lesson/update", {
                 id: lesson_id,

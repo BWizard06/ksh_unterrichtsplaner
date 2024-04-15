@@ -101,6 +101,17 @@ export default function LessionInput() {
         let lessonStartTime = new Date(startTime);
         let lessonEndTime = new Date(endTime);
 
+        if(lessonEndTime <= lessonStartTime){
+            toast({
+                title: "Ungültige Zeitangaben",
+                description: "Das Enddatum muss nach dem Startdatum liegen.",
+                variant: "warning",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
         for (let i = 0; i <= recurrence; i++) {
             console.log("start:" + lessonStartTime);
             console.log("end:" + lessonEndTime);

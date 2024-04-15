@@ -78,7 +78,7 @@ export default function LoginPage() {
                     </div>
                 ) : (
                     <form className="mt-8 space-y-6">
-                        <h2 className="title">
+                        <h2 className="title text-center">
                             Anmelden als{" "}
                             {userType === "Teacher" ? "Lehrer" : "Schüler"}
                         </h2>

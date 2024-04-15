@@ -6,8 +6,9 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import BackBtn from "@/components/BackBtn";
 import { useRouter } from "next/navigation";
-import { utc2Local } from "@/lib/utc2local";
 import { formatDateToInputValue } from "@/lib/formatDateToInputValue";
+import { useToast } from "@/components/ui/use-toast";
+
 
 export default function ApppointmentUpdate() {
     const searchParams = useParams();
@@ -20,6 +21,7 @@ export default function ApppointmentUpdate() {
     const [isLoading, setIsLoading] = useState(true);
     const [token, setToken] = useState();
     const [role, setRole] = useState();
+    const { toast } = useToast();
     const router = useRouter();
 
     useEffect(() => {
@@ -77,6 +79,18 @@ export default function ApppointmentUpdate() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(endTime <= startTime){
+            toast({
+                title: "Ungültige Zeitangaben",
+                description: "Das Enddatum muss nach dem Startdatum liegen.",
+                variant: "warning",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
         axios
             .put("/api/appointment/update", {
                 id: appointment_id,

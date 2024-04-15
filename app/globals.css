@@ -103,11 +103,11 @@ body{
 }
 
 .nachpruefung {
-  @apply cursor-default;
+  @apply cursor-default pointer-events-none;
 }
 
 .wochenende{
-  @apply cursor-default;
+  @apply cursor-default pointer-events-none;
 }
 
 .fc-header-toolbar {

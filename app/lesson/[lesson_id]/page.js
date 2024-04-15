@@ -12,7 +12,6 @@ import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import "@/app/globals.css";
 import { useRouter } from "next/navigation";
-import { utc2Local } from '@/lib/utc2local'
 
 export default function LessonDetail() {
     const searchParams = useParams();

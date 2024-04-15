@@ -32,6 +32,17 @@ export default function appointmentInput() {
         let appointmentStartTime = new Date(startTime);
         let appointmentEndTime = new Date(endTime);
 
+        if(appointmentEndTime <= appointmentStartTime){
+            toast({
+                title: "Ungültige Zeitangaben",
+                description: "Das Enddatum muss nach dem Startdatum liegen.",
+                variant: "warning",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
         axios
             .post("/api/appointment/create", {
                 teacherId: teacherData.id,
