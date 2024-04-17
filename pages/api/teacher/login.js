@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             });
 
             if (!user) {
-                return res.status(404).json({ message: "Lehrer nicht gefunden" });
+                return res.status(404).json({ message: "Teacher not found" });
             }
 
             const isPasswordValid = await bcrypt.compare(

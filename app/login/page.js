@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BackBtn from "@/components/BackBtn";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LoginPage() {
     const [userType, setUserType] = useState(null);
@@ -12,6 +13,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [availableClasses, setAvailableClasses] = useState([]);
     const [selectedClass, setSelectedClass] = useState(null);
+    const {toast} = useToast()
     const router = useRouter()
 
     useEffect(() => {
@@ -31,7 +33,15 @@ export default function LoginPage() {
                     const { token } = response.data;
                     localStorage.setItem("token", token);
                     router.push('/calendar')
-                });
+                })
+                .catch((error)=>{
+                    toast({
+                        title: "Login fehlgeschlagen",
+                        description: `Error: ${error.response.data.message}` ,
+                        variant: "destructive",
+                        duration: 5000,
+                    });
+                })
         } else {
             axios
                 .post("/api/teacher/login", {
@@ -42,6 +52,14 @@ export default function LoginPage() {
                     const { token } = response.data;
                     localStorage.setItem("token", token);
                     router.push('/calendar')
+                })
+                .catch((error)=>{
+                    toast({
+                        title: "Login fehlgeschlagen",
+                        description: `Error: ${error.response.data.message}` ,
+                        variant: "destructive",
+                        duration: 5000,
+                    });
                 });
         }
     };
@@ -53,7 +71,7 @@ export default function LoginPage() {
     return (
         <main className="flex items-center justify-center min-h-screen">
             <div className="max-w-md w-full space-y-8">
-                <BackBtn destination=''/>
+                <BackBtn destination='/'/>
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
                         <div className="flex justify-center items-center">

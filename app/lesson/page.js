@@ -240,7 +240,7 @@ export default function LessionInput() {
                                         name="title"
                                         placeholder="Titel"
                                         required
-                                        maxLength={45}
+                                        maxlength={45}
                                         className="w-auto"
                                         onChange={(e) =>
                                             setTitle(e.target.value)

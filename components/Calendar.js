@@ -120,13 +120,9 @@ export default function Calendar() {
                 </div>
             ) : (
                 <div>
-                    <div className="flex items-center justify-normal w-max mb-2">
+                    <div className="flex items-center justify-between w-full mb-2">        
+                        <h1 className="subtitle ml-4">Kalender für: {username}</h1>
                         <LogoutBtn />
-                        <h1 className="subtitle ml-4">
-                            {role === "teacher"
-                                ? `Kalender für: ${username}`
-                                : `Kalendar für: ${username}`}
-                        </h1>
                     </div>
                     <FullCalendar
                         plugins={[

@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import BackBtn from "@/components/BackBtn";
+import { useToast } from "@/components/ui/use-toast";
+
 
 export default function Login() {
     const [userType, setUserType] = useState(null);
@@ -18,6 +20,7 @@ export default function Login() {
     const [availableClasses, setAvailableClasses] = useState([]);
     const [isEintragenChecked, setIsEintragenChecked] = useState(false);
     const [selectedClass, setSelectedClass] = useState([]);
+    const {toast} = useToast()
     const router = useRouter();
 
     useEffect(() => {
@@ -39,6 +42,14 @@ export default function Login() {
                     const { token } = response.data;
                     localStorage.setItem("token", token);
                     router.push("/calendar");
+                })
+                .catch((error)=>{
+                    toast({
+                        title: "Registrieren fehlgeschlagen",
+                        description: `Error: ${error.response.data.error}` ,
+                        variant: "destructive",
+                        duration: 5000,
+                    });
                 });
         } else {
             const createdClasses = await Promise.all(
@@ -64,8 +75,13 @@ export default function Login() {
                     localStorage.setItem("username", username);
                     router.push("/calendar");
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch((error)=>{
+                    toast({
+                        title: "Registrieren fehlgeschlagen",
+                        description: `Error: ${error.response.data.error}` ,
+                        variant: "destructive",
+                        duration: 5000,
+                    });
                 });
         }
     };
@@ -80,7 +96,7 @@ export default function Login() {
     return (
         <main className="flex items-center justify-center min-h-screen w-full">
             <div className="space-y-8">
-                <BackBtn destination="" />
+                <BackBtn destination="/" />
                 {!userType ? (
                     <div className="space-y-16 flex justify-center">
                         <h2 className="title">Registrieren als ...</h2>
@@ -266,6 +282,7 @@ export default function Login() {
                                     onChange={(e) =>
                                         setSelectedClass(e.target.value)
                                     }
+                                    required
                                 >
                                     <option value="deafult" selected disabled>
                                         Klasse auswählen
