@@ -32,7 +32,7 @@ npx prisma db push
 npx prisma generate
 ```
 ## Konfiguration
-Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um.
+Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um. Aktualisieren Sie die Werte DATABASE_URL zu Ihrer eigenen MongoDB-URL und aktualisieren Sie das JWT_SECRET.
 
 ## Starten
 ```sh
