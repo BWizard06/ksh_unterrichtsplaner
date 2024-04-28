@@ -171,7 +171,7 @@ export default function Login() {
                                     />
                                     <select
                                         placeholder="Klassen auswählen"
-                                        className="registerInputField h-48"
+                                        className="registerInputField h-56"
                                         onChange={(e) =>
                                             setSelectedClass(() =>
                                                 setSelectedClass(
@@ -190,7 +190,7 @@ export default function Login() {
                                             selected
                                             disabled
                                         >
-                                            Klasse auswählen
+                                            Klassen auswählen
                                         </option>
                                         {availableClasses &&
                                         availableClasses.length > 0 ? (
