@@ -17,7 +17,6 @@ export default async function handler(req, res) {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // check if the user already exists
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
