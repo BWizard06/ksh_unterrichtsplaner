@@ -1,11 +1,13 @@
-# Projektname
-
-Beschreiben Sie hier Ihr Projekt.
+# KSH-Unterrichtsplaner
 
 ## Anforderungen
 
 - Node.js
 - npm
+
+## Konfiguration
+
+Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um. Aktualisieren Sie die Werte DATABASE_URL zu Ihrer eigenen [MongoDB Atlas URL](https://account.mongodb.com/account/login?n=https://cloud.mongodb.com/v2/640888ab23702e38ed54454e&nextHash=%23clusters&signedOut=true) und aktualisieren Sie das JWT_SECRET.
 
 ## Installation
 
@@ -31,8 +33,6 @@ npx prisma db push
 ```sh
 npx prisma generate
 ```
-## Konfiguration
-Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um. Aktualisieren Sie die Werte DATABASE_URL zu Ihrer eigenen MongoDB-URL und aktualisieren Sie das JWT_SECRET.
 
 ## Starten
 ```sh
