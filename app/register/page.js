@@ -31,6 +31,7 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        let errorOccurred = false;
 
         if (userType === "Student") {
             axios
@@ -57,8 +58,23 @@ export default function Login() {
                     axios
                         .post("/api/class/create", { name: teacherClass })
                         .then((response) => response.data.id)
+                        .catch((error) => {
+                            toast({
+                                title: "Registrieren fehlgeschlagen",
+                                description: `Error: ${error.response.data.error}` ,
+                                variant: "destructive",
+                                duration: 5000,
+                            })
+                            errorOccurred = true;
+                        })
+                    
                 )
             );
+
+            if (errorOccurred) {
+                router.refresh()
+                return;
+            }
             const allClassIds = [...createdClasses, ...selectedClass];
 
             axios
@@ -92,6 +108,11 @@ export default function Login() {
     useEffect(() => {
         console.log("Class Ids", classIds);
     }, [classIds]);
+
+    useEffect(() => {
+        console.log("selected class", selectedClass);
+    
+    }, [selectedClass])
 
     return (
         <main className="flex items-center justify-center min-h-screen w-full">
