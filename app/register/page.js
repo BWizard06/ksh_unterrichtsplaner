@@ -72,7 +72,7 @@ export default function Login() {
             );
 
             if (errorOccurred) {
-                router.refresh()
+                window.location.reload();
                 return;
             }
             const allClassIds = [...createdClasses, ...selectedClass];
