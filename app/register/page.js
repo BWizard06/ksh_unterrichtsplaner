@@ -7,7 +7,7 @@ import BackBtn from "@/components/BackBtn";
 import { useToast } from "@/components/ui/use-toast";
 
 
-export default function Login() {
+export default function RegisterPage() {
     const [userType, setUserType] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
