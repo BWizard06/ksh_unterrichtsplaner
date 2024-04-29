@@ -31,7 +31,7 @@ export default function handler(req, res) {
         const lessonId = json.lessonId;
         const visibility = json.visibility;
 
-        if (!req.file || !lessonId || visibility === undefined) {
+        if (!req.file || !lessonId) {
             return res
                 .status(400)
                 .json({ message: "Erforderliche Felder fehlen." });

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
                 }
             });
 
-            if (!appointment) {
+            if (!response) {
                 return res
                     .status(404)
                     .json({ error: "Termin nicht gefunden. " });
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             });
         }
     } else {
-        res.setHeader("Allow", ["POST"]);
+        res.setHeader("Allow", ["DELETE"]);
         res.status(405).end(`Method ${req.method} not allowed`);
     }
 }
