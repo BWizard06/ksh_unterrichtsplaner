@@ -2,6 +2,11 @@ import React from "react";
 import { ShareIcon } from "@heroicons/react/24/outline";
 import { useToast } from "@/components/ui/use-toast";
 
+/**
+ * a share link icon that can be clicked to copy the current url
+ * @returns a jsx element that is a share link icon
+ 
+ */
 export default function ShareLinkIcon() {
     const { toast } = useToast();
     

@@ -11,6 +11,11 @@ import PulseLoader from "react-spinners/PulseLoader";
 import LogoutBtn from "./LogoutBtn";
 import "@/app/globals.css";
 
+/**
+ * the main component that displays the calendar and the events
+ * for the user that is logged in
+ * @returns a jsx element that is a calendar with the events
+ */
 export default function Calendar() {
     const [teacherData, setTeacherData] = useState();
     const [lessons, setLessons] = useState([]);
