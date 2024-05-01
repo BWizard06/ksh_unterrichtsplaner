@@ -9,6 +9,8 @@ import TrashBinIcon from "@/components/TrashBinIcon";
 import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import { useRouter } from 'next/navigation'
+import { isoToString } from "@/lib/isoToString";
+import { shortenLongTitle } from "@/lib/shortenLongTitle";
 
 export default function AppointmentDetail() {
     const searchParams = useParams();
@@ -81,24 +83,6 @@ export default function AppointmentDetail() {
         console.log("token", token);
     }, [token]);
 
-    const isoToString = (isoString) => {
-        let dateString = isoString.split("T")[0];
-        let year = dateString.split("-")[0];
-        let month = dateString.split("-")[1];
-        let day = dateString.split("-")[2];
-
-        let time = isoString
-            .substring(isoString.indexOf("T") + 1)
-            .split(":")[0];
-        let hour = isoString
-            .substring(isoString.indexOf("T") + 1)
-            .split(":")[1];
-
-        dateString =
-            day + "." + month + "." + year + ", um " + time + ":" + hour;
-        return dateString;
-    };
-
     return (
         <main className="flex flex-col items-center justify-between">
             {isLoading ? (
@@ -108,7 +92,7 @@ export default function AppointmentDetail() {
                     <div className="w-full space-x-2">
                         <div className="flex items-center justify-center">
                             <BackBtn destination="calendar" />
-                            <h1 className="title">{appointment.title}</h1>
+                            <h1 className="title">{shortenLongTitle(appointment.title)}</h1>
                             <TrashBinIcon
                                 onClick={() => {
                                     deleteAppointment(appointment.id);
@@ -117,11 +101,7 @@ export default function AppointmentDetail() {
                             />
                             <ShareLinkIcon />
                             <EditPenIcon
-                                onClick={() => {
-                                    router.push(
-                                        `/appointment/update/${appointment.id}`
-                                    );
-                                }}
+                                onClick={() => {router.push(`/appointment/update/${appointment.id}`);}}
                             />
                         </div>
                     </div>

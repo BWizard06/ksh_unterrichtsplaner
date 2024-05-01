@@ -122,9 +122,7 @@ export default function LoginPage() {
                                     type="text"
                                     placeholder="Benutzername"
                                     className="registerInputField rounded-md"
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
+                                    onChange={(e) => setUsername(e.target.value)}
                                 />
                             </div>
                         )}

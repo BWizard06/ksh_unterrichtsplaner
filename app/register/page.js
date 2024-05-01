@@ -137,7 +137,7 @@ export default function RegisterPage() {
                         </div>
                     </div>
                 ) : (
-                    <>
+                    <form>
                         <h2 className="text-center text-3xl font-extrabold text-gray-900">
                             Registrieren als{" "}
                             {userType === "Teacher" ? "Lehrer" : "Schüler"}
@@ -232,11 +232,7 @@ export default function RegisterPage() {
                                                 className="rounded-b-md registerInputField"
                                                 type="number"
                                                 placeholder="Anzahl Klassen"
-                                                onChange={(e) =>
-                                                    setNumberOfClasses(
-                                                        e.target.value
-                                                    )
-                                                }
+                                                onChange={(e) => setNumberOfClasses(e.target.value)}
                                                 min={0}
                                             />
                                             {numberOfClasses > 0 && (
@@ -252,29 +248,15 @@ export default function RegisterPage() {
                                                             }`}
                                                             className="rounded-md w-1/2 registerInputField"
                                                             onChange={(e) => {
-                                                                const newClasses =
-                                                                    [
-                                                                        ...teacherClasses,
-                                                                    ];
-                                                                newClasses[
-                                                                    index
-                                                                ] =
-                                                                    e.target.value;
-                                                                setTeacherClasses(
-                                                                    newClasses
-                                                                );
+                                                                const newClasses = [...teacherClasses,];
+                                                                newClasses[index] = e.target.value;
+                                                                setTeacherClasses(newClasses);
                                                             }}
                                                         />
                                                     ))}
                                                 </div>
                                             )}
                                         </>
-                                    )}
-
-                                    {error && (
-                                        <div className="text-red-500 text-center mt-2">
-                                            {error}
-                                        </div>
                                     )}
                                     <div className="flex items-center justify-center mt-20">
                                         <button
@@ -293,16 +275,12 @@ export default function RegisterPage() {
                                     type="text"
                                     placeholder="Benutzername"
                                     className="registerInputField rounded-t-md"
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
+                                    onChange={(e) => setUsername(e.target.value)}
                                 />
                                 <select
                                     placeholder="Klassenname"
                                     className="registerInputField rounded-b-md"
-                                    onChange={(e) =>
-                                        setSelectedClass(e.target.value)
-                                    }
+                                    onChange={(e) => setSelectedClass(e.target.value)}
                                     required
                                 >
                                     <option value="deafult" selected disabled>
@@ -334,7 +312,7 @@ export default function RegisterPage() {
                                 </div>
                             </div>
                         )}
-                    </>
+                    </form>
                 )}
             </div>
         </main>

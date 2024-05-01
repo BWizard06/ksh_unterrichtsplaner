@@ -12,6 +12,9 @@ import ShareLinkIcon from "@/components/ShareLinkIcon";
 import EditPenIcon from "@/components/EditPenIcon";
 import "@/app/globals.css";
 import { useRouter } from "next/navigation";
+import { isoToString } from "@/lib/isoToString";
+import { shortenFileString } from "@/lib/shortenFileString";
+import { shortenLongTitle } from "@/lib/shortenLongTitle";
 
 export default function LessonDetail() {
     const searchParams = useParams();
@@ -53,37 +56,6 @@ export default function LessonDetail() {
             .catch((error) =>
                 console.error("Fehler beim Exportieren der Dateien", error)
             );
-    };
-
-    function shortenFileString(string) {
-        let lastDot = string.lastIndexOf(".");
-        let StringafterDot = string.substring(lastDot);
-        return string.substring(0, 10) + "..." + StringafterDot;
-    }
-
-    function shortenLongTitle(title) {
-        if (title.length > 35) {
-            return title.substring(0, 35) + "...";
-        }
-        return
-    }
-
-    const isoToString = (isoString) => {
-        let dateString = isoString.split("T")[0];
-        let year = dateString.split("-")[0];
-        let month = dateString.split("-")[1];
-        let day = dateString.split("-")[2];
-
-        let time = isoString
-            .substring(isoString.indexOf("T") + 1)
-            .split(":")[0];
-        let hour = isoString
-            .substring(isoString.indexOf("T") + 1)
-            .split(":")[1];
-
-        dateString =
-            day + "." + month + "." + year + ", um " + time + ":" + hour;
-        return dateString;
     };
 
     useEffect(() => {
@@ -157,9 +129,7 @@ export default function LessonDetail() {
                             {role === "teacher" && (
                                 <EditPenIcon
                                     onClick={() => {
-                                        router.push(
-                                            `/lesson/update/${lesson.id}`
-                                        );
+                                        router.push(`/lesson/update/${lesson.id}`);
                                     }}
                                 />
                             )}
@@ -200,7 +170,7 @@ export default function LessonDetail() {
                                 {lesson.files.map((file) => (
                                     <button
                                         key={file.id}
-                                        className="bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white text-sm cursor-pointer px-2 py-1 m-1"
+                                        className="filebtn"
                                         onClick={() => exportFile(file)}
                                     >
                                         {shortenFileString(file.file_name)}
@@ -214,7 +184,7 @@ export default function LessonDetail() {
                                     {visibleFiles.map((file) => (
                                         <button
                                             key={file.id}
-                                            className="bg-indigo-500 hover:bg-indigo-600 focus:bg-indigo-700 focus:outline-none border-none rounded-xl text-white text-sm cursor-pointer px-2 py-1 m-1"
+                                            className="filebtn"
                                             onClick={() => exportFile(file)}
                                         >
                                             {shortenFileString(file.file_name)}

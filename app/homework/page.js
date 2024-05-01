@@ -105,30 +105,10 @@ export default function Homework() {
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Fälligkeitsdatum
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Hausaufgabe
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Fach
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                        >
-                                            Lektion
-                                        </th>
+                                        <th scope="col" className="hwth"> Fälligkeitsdatum </th>
+                                        <th scope="col" className="hwth"> Hausaufgabe </th>
+                                        <th scope="col" className="hwth"> Fach </th>
+                                        <th scope="col" className="hwth"> Lektion </th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -136,9 +116,7 @@ export default function Homework() {
                                         <tr key={index}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">
-                                                    {new Date(
-                                                        hw.dueDate
-                                                    ).toLocaleDateString()}
+                                                    {new Date(hw.dueDate).toLocaleDateString()}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -154,11 +132,7 @@ export default function Homework() {
                                             <td className="px-6 py-4">
                                                 <div
                                                     className="text-sm text-gray-900 underline cursor-pointer"
-                                                    onClick={() => {
-                                                        router.push(
-                                                            `/lesson/${hw.id}`
-                                                        );
-                                                    }}
+                                                    onClick={() => {router.push(`/lesson/${hw.id}`);}}
                                                 >
                                                     {hw.name}
                                                 </div>
