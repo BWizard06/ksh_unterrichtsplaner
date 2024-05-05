@@ -7,7 +7,7 @@
 
 ## Konfiguration
 
-Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um. Aktualisieren Sie die Werte DATABASE_URL zu Ihrer eigenen [MongoDB Atlas URL](https://account.mongodb.com/account/login?n=https://cloud.mongodb.com/v2/640888ab23702e38ed54454e&nextHash=%23clusters&signedOut=true) und aktualisieren Sie das JWT_SECRET.
+Aktualisieren Sie die .env.example Datei und benennen Sie sie in .env um. Aktualisieren Sie die Werte DATABASE_URL zu Ihrer eigenen [MongoDB Atlas URL](https://account.mongodb.com/account/login?n=https://cloud.mongodb.com/v2/640888ab23702e38ed54454e&nextHash=%23clusters&signedOut=true) und aktualisieren Sie das JWT_SECRET zu einem beliebigen String.
 
 ## Installation
 
