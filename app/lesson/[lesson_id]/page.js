@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { isoToString } from "@/lib/isoToString";
 import { shortenFileString } from "@/lib/shortenFileString";
 import { shortenLongTitle } from "@/lib/shortenLongTitle";
+import { capitalizeLessonType } from "@/lib/capitalizeLessonType";
 
 export default function LessonDetail() {
     const searchParams = useParams();
@@ -150,7 +151,7 @@ export default function LessonDetail() {
                         </p>
                         <p className="text-2xl">
                             <span className="subtitle">Lektionstyp: </span>
-                            {lesson.lesson_type}
+                            {capitalizeLessonType(lesson.lesson_type)}
                         </p>
                         <p className="text-2xl">
                             <span className="subtitle">Lektionsstart: </span>
