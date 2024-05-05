@@ -211,8 +211,6 @@ export default function appointmentInput() {
                                         id="start"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
                                         onChange={(e) =>
                                             setStartTime(
                                                 dateSplitToIso(e.target.value.split("T")[0],
@@ -228,8 +226,6 @@ export default function appointmentInput() {
                                         id="end"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
                                         onChange={(e) =>
                                             setEndTime(
                                                 dateSplitToIso(e.target.value.split("T")[0],

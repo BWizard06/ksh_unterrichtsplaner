@@ -154,8 +154,6 @@ export default function ApppointmentUpdate() {
                                         id="start"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
                                         value={startTime}
                                         onChange={(e) =>
                                             setStartTime(e.target.value)
@@ -168,8 +166,6 @@ export default function ApppointmentUpdate() {
                                         id="end"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
                                         value={endTime}
                                         onChange={(e) =>
                                             setEndTime(e.target.value)

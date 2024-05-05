@@ -312,8 +312,6 @@ export default function LessonUpdate() {
                                         id="start"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
                                         value={startTime}
                                         onChange={(e) =>
                                             setStartTime(
@@ -330,9 +328,6 @@ export default function LessonUpdate() {
                                         id="end"
                                         type="datetime-local"
                                         required
-                                        min={"07:00"}
-                                        max={"22:00"}
-                                        
                                         value={endTime}
                                         onChange={(e) =>
                                             setEndTime(
