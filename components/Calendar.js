@@ -169,9 +169,7 @@ export default function Calendar() {
                                       end: "dayGridMonth timeGridWeek",
                                   }
                         }
-                        slotMinTime={"06:00:00"}
                         timeZone={"locale"}
-                        slotMaxTime={"22:00:00"}
                         contentHeight={"auto"}
                         locale={dE}
                         weekNumbers={true}
