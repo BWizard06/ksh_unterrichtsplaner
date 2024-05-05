@@ -379,6 +379,7 @@ export default function LessionInput() {
                                         }
                                         placeholder="Anzahl Wochen"
                                         min="0"
+                                        value={0}
                                     />
                                     <label htmlFor="recurrence">
                                         Wochen wiederholen
