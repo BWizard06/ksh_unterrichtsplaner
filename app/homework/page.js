@@ -80,7 +80,7 @@ export default function Homework() {
                     name: lesson.title,
                 };
             })
-            .filter((hw) => hw.homework != null || hw.homework != "");
+            .filter((hw) => hw.homework != null && hw.homework != "");
 
         setHomework(newHomework);
         console.log("lessons: ", lessons);
